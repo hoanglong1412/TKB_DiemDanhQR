@@ -1,0 +1,78 @@
+﻿@using DiemDanhQR.Models;
+
+@{
+    ViewBag.Title = "ThoiKhoaBieu";
+    Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
+}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+</style>
+<h2>Thời Khóa Biểu</h2>
+
+
+<table>
+    <tr>
+        <th>Mã MH</th>
+        <th>Tên MH</th>
+        <th>Nhóm</th>
+        <th>STC</th>
+        <th>TH</th>
+        <th>Thứ</th>
+        <th>Tiết BD	</th>
+        <th>ST</th>
+        <th>Phòng</th>
+        <th>GVHD</th>
+        <th>Thời gian</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        @*if (item.LopMon.NgayKetThuc <= DateTime.Now)
+            {
+                <h1>tre</h1>
+            }
+            else
+            {
+                <h1>som</h1>
+            }*@
+            <tr>
+                <td>@item.LopMon.MonHoc.MaMon</td>
+                <td style="width:360px;">@item.LopMon.MonHoc.TenMon</td>
+                <td>@item.LopMon.Nhom_ToThucHanh.Nhom</td>
+                <td>@item.LopMon.MonHoc.SoTinhChi</td>
+                <td>@item.LopMon.Nhom_ToThucHanh.ToThucHanh</td>
+                <td>@item.LopMon.BuoiHoc.Thu.TenThu</td>
+                <td>@item.LopMon.BuoiHoc.TietBatDau</td>
+                <td>@item.LopMon.BuoiHoc.SoTiet</td>
+                <td>@item.LopMon.MaPhong</td>
+                <td>@item.LopMon.GiaoVien.HoTen</td>
+                <td>
+                    @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
+                    @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
+                </td>
+            </tr>
+    }
+
+</table>
+
+
+
+
+
+
+
+
