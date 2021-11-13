@@ -8,7 +8,7 @@
 
 }
 
-<h2>DanhSachDiemDanh</h2>
+<h2>Bảng điểm danh</h2>
 
 <style>
     table {
@@ -29,7 +29,6 @@
     }
     }
 </style>
-<h2>Thời Khóa Biểu</h2>
 
 @{
     int count = 0;
@@ -39,8 +38,7 @@
     int KhoangThoiGian = d3.Days;
     int SoBuoiHoc = KhoangThoiGian / 7 + 1;
 }
-@KhoangThoiGian-
-@ViewBag.test
+
 
 <table>
     <tr>
@@ -61,11 +59,12 @@
             <td>@item.MSSV</td>
             <td>@item.SinhVien.HoTen</td>
              
-            @*@for (int i = 1; i <= 15; i++)
+            @for (int i = 1; i <= SoBuoiHoc; i++)
             {
                 //_ @count
                 <td class="Delete_Column">
-                    @if (item.BuoiHoc1 == true)
+                    <span class="array_number" my-data ="@item.BuoiHoc"></span>
+                    @*@if ( == true)
                     {
                         <i class="fas fa-check DaDiemDanh"></i>
 
@@ -73,10 +72,10 @@
                     else if (item.BuoiHoc1 == false)
                     {
                         <i class="fas fa-times ChuaDiemDanh"></i>
-                    }
+                    }*@
                 </td>
              
-            }*@
+            }
 
 
 
@@ -88,12 +87,39 @@
 
 <script>
     const Row_Count = document.querySelectorAll('.Row_Count');
+    var my_array = [];
+
+    // lấy số lớn nhất ở các hàng
     Row_Count.forEach(row => {
-        const tds = row.querySelectorAll('.Delete_Column');
-              for (var i = @SoBuoiHoc; i < tds.length; i++) {
-                tds[i].style.display = "none";
+        var array_number = row.querySelector('.Delete_Column .array_number').getAttribute('my-data').split(',');
+        var max_number = (Math.max.apply(Math, array_number));
+        my_array.push(max_number);
+    })
+
+    var max_my_array = Math.max.apply(Math, my_array)
+
+    // lặp từ số lớn nhất xuống, nếu mảng nào chứa buổi điểm danh nào thì hiện
+    for (var j = 0; j < Row_Count.length; j++) {
+        var my_row = Row_Count[j];
+        //var text_number = my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data');
+        var array_number = my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data').split(',');
+        const tds = my_row.querySelectorAll('.Delete_Column');
+        for (var i = max_my_array; i > 0; i--) {
+            if (array_number.indexOf(i.toString()) != -1) {
+                tds[i - 1].innerHTML = `
+                    <i class="fas fa-check DaDiemDanh"></i>
+                `;
+            }
+            else {
+                tds[i - 1].innerHTML = `
+                    <i class="fas fa-times ChuaDiemDanh"></i>
+                `;
             }
 
-    })
+        }
+    }
+
+
+
 
 </script>
