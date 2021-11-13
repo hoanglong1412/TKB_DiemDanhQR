@@ -33,7 +33,7 @@ namespace DiemDanhQR.Controllers
 
         public ActionResult ThoiKhoaBieuTheoTuan(DateTime ?date)
         {
-            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieu("1811063022");
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoThuTrongTuan("1811063022");
             ViewBag.date = date;
             return View(ds_TKB);
         }

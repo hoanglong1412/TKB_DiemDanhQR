@@ -20,6 +20,12 @@ namespace DiemDanhQR.DAO
             return ds_TKB;
         }
 
+        public IEnumerable<ThoiKhoaBieu_DiemDanh> LayThoiKhoaBieuTheoThuTrongTuan(string mssv)
+        {
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MSSV == mssv).OrderBy(m => m.LopMon.BuoiHoc.MaThu);
+            return ds_TKB;
+        }
+
         public IEnumerable<ThoiKhoaBieu_DiemDanh> LayThoiKhoaBieuBanCanSu(string mssv)
         {
             IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MSSV == mssv && m.LaBanCanSu == true);
