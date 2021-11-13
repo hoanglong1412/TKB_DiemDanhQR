@@ -49,7 +49,14 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -98,6 +105,7 @@
   <ItemGroup>
     <Content Include="Assets\css\animation.css" />
     <Content Include="Assets\css\base.css" />
+    <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\grid.css" />
     <Content Include="Assets\css\login_main.css" />
     <Content Include="Assets\css\login_reponsive.css" />
@@ -111,6 +119,10 @@
     <Content Include="Assets\img\logo1.png" />
     <Content Include="Assets\img\sunny.png" />
     <Content Include="Assets\img\usericon.png" />
+    <Content Include="Assets\js\bootstrap.js" />
+    <Content Include="Assets\js\jquery-3.4.1.min.js" />
+    <Content Include="Assets\css\jquery.dataTables.min.css" />
+    <Content Include="Assets\js\jquery.dataTables.min.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -119,6 +131,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\GiangVien\Controllers\GiangVienController.cs" />
     <Compile Include="Areas\GiangVien\GiangVienAreaRegistration.cs" />
+    <Compile Include="Areas\Khoa\Controllers\ThemDanhSachSinhVienController.cs" />
+    <Compile Include="Areas\Khoa\Controllers\ThemThoiKhoaBieuController.cs" />
+    <Compile Include="Areas\Khoa\Controllers\TrangChuController.cs" />
     <Compile Include="Areas\Khoa\KhoaAreaRegistration.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="DAO\LichGiangDayDAO.cs" />
@@ -155,6 +170,12 @@
     <Content Include="Areas\GiangVien\Views\Shared\_LayoutGiangVien.cshtml" />
     <Content Include="Areas\GiangVien\Views\web.config" />
     <Content Include="Areas\Khoa\Views\web.config" />
+    <Content Include="Areas\Khoa\Views\Shared\_LayoutKhoa.cshtml" />
+    <Content Include="Areas\Khoa\Views\TrangChu\Index.cshtml" />
+    <Content Include="Areas\Khoa\Views\ThemThoiKhoaBieu\Index.cshtml" />
+    <Content Include="Areas\Khoa\Views\ThemThoiKhoaBieu\Success.cshtml" />
+    <Content Include="Areas\Khoa\Views\ThemDanhSachSinhVien\Index.cshtml" />
+    <Content Include="Areas\Khoa\Views\ThemDanhSachSinhVien\Success.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LayoutSinhVien.cshtml" />
     <Content Include="Views\SinhVien\Index.cshtml" />
@@ -173,9 +194,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\GiangVien\Data\" />
-    <Folder Include="Areas\Khoa\Controllers\" />
     <Folder Include="Areas\Khoa\Data\" />
-    <Folder Include="Areas\Khoa\Views\Shared\" />
+    <Folder Include="Assets\excel\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,95 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Khoa/Views/Shared/_LayoutKhoa.cshtml";
+}
+<h2>Thêm danh sách sinh viên</h2>
+<div class="card">
+    <div class="card-header">
+        @using (Html.BeginForm("Index", "ThemDanhSachSinhVien", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="file" name="fileupload" />
+                        @ViewBag.Thongbao
+
+                    </div>
+                </div>
+                <div class="col-md-offset-2 col-md-10 my-3">
+                    <input type="submit" value="Đọc Excel" class="btn btn-primary" />
+                    <a href="@Url.Action("ThemDS","ThemDanhSachSinhVien")" class="btn btn-success">Thêm dữ liệu vào SQL</a>
+                </div>
+            </div>
+        }
+    </div>
+    @if (ViewData.Model != null)
+    {
+        <div class="card-body">
+            <table id="myTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã MH</th>
+                        <th>Nhóm</th>
+                        <th>Tên môn học</th>
+                        <th>Số TC</th>
+                        <th>Tổ</th>
+                        <th>Lớp MH</th>
+                        <th>Giảng viên</th>
+                        <th>Mã SV</th>
+                        <th>Họ lót</th>
+                        <th>Tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Mã lớp</th>
+                        <th>Email SV</th>
+                        <th>SĐT SV</th>
+                        <th>Đợt</th>
+                        <th>BM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in ViewData.Model.Rows)
+                    {
+                        <tr>
+                            <td>@row[0]</td>
+                            <td>@row[1]</td>
+                            <td>@row[2]</td>
+                            <td>@row[3]</td>
+                            <td>@row[4]</td>
+                            <td>@row[5]</td>
+                            <td>@row[6]</td>
+                            <td>@row[7]</td>
+                            <td>@row[8]</td>
+                            <td>@row[9]</td>
+                            <td>@row[10]</td>
+                            <td>@row[11]</td>
+                            <td>@row[12]</td>
+                            <td>@row[13]</td>
+                            <td>@row[14]</td>
+                            <td>@row[15]</td>
+                            <td>@row[16]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section head{
+
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+@section footer{
+    <script src="~/Assets/js/jquery.dataTables.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#myTable').DataTable();
+        });</script>
+}
+
