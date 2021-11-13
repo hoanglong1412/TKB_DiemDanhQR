@@ -22,7 +22,6 @@ namespace DiemDanhQR.Models
         [StringLength(50)]
         public string HoTen { get; set; }
 
-        [StringLength(20)]
         public string MatKhau { get; set; }
 
         [StringLength(20)]
@@ -35,9 +34,13 @@ namespace DiemDanhQR.Models
 
         public int? MaKhoa { get; set; }
 
+        public int? MaQuyen { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LopMon> LopMons { get; set; }
 
         public virtual Khoa Khoa { get; set; }
+
+        public virtual Quyen Quyen { get; set; }
     }
 }

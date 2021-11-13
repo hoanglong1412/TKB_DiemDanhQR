@@ -1,0 +1,99 @@
+﻿@using DiemDanhQR.Models;
+@using DiemDanhQR.DAO;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    ViewBag.Title = "DanhSachDiemDanh";
+    Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
+
+}
+
+<h2>DanhSachDiemDanh</h2>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+    }
+</style>
+<h2>Thời Khóa Biểu</h2>
+
+@{
+    int count = 0;
+    DateTime date1 = ViewBag.TKB.LopMon.NgayBatDau;
+    DateTime date2 = ViewBag.TKB.LopMon.NgayKetThuc;
+    TimeSpan d3 = date2 - date1;
+    int KhoangThoiGian = d3.Days;
+    int SoBuoiHoc = KhoangThoiGian / 7 + 1;
+}
+@KhoangThoiGian-
+@ViewBag.test
+
+<table>
+    <tr>
+
+        <th>MSSV</th>
+        <th>Họ Tên</th>
+        @for (int i = 1; i <= SoBuoiHoc; i++)
+            {
+                <th>Buổi @i</th>
+            }
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr class="Row_Count">
+            <td>@item.MSSV</td>
+            <td>@item.SinhVien.HoTen</td>
+             
+            @*@for (int i = 1; i <= 15; i++)
+            {
+                //_ @count
+                <td class="Delete_Column">
+                    @if (item.BuoiHoc1 == true)
+                    {
+                        <i class="fas fa-check DaDiemDanh"></i>
+
+                    }
+                    else if (item.BuoiHoc1 == false)
+                    {
+                        <i class="fas fa-times ChuaDiemDanh"></i>
+                    }
+                </td>
+             
+            }*@
+
+
+
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    const Row_Count = document.querySelectorAll('.Row_Count');
+    Row_Count.forEach(row => {
+        const tds = row.querySelectorAll('.Delete_Column');
+              for (var i = @SoBuoiHoc; i < tds.length; i++) {
+                tds[i].style.display = "none";
+            }
+
+    })
+
+</script>

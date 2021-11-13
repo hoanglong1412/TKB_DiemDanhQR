@@ -17,7 +17,8 @@ namespace DiemDanhQR.Models
         [Key]
         public int MaNhomToThucHanh { get; set; }
 
-        public int? Nhom { get; set; }
+        [StringLength(10)]
+        public string Nhom { get; set; }
 
         public int? ToThucHanh { get; set; }
 

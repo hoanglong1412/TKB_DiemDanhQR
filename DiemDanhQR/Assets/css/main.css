@@ -334,3 +334,10 @@ body{
             display: inline-block;
             margin: 6px;
         }
+
+    .DaDiemDanh{
+        color:green;
+    }
+    .ChuaDiemDanh{
+        color:red;
+    }

@@ -37,5 +37,19 @@ namespace DiemDanhQR.Controllers
             ViewBag.date = date;
             return View(ds_TKB);
         }
+
+        public ActionResult DanhSachLop()
+        {
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuBanCanSu("1811063022");
+            return View(ds_TKB);
+        }
+
+        public ActionResult DanhSachDiemDanh(int malopmon)
+        {
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayDsThoiKhoaBieuTheoMon(malopmon);
+            ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoMon(malopmon);
+            ViewBag.TKB = TKB;
+            return View(ds_TKB);
+        }
     }
 }

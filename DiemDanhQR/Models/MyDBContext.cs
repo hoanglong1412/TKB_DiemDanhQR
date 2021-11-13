@@ -21,6 +21,7 @@ namespace DiemDanhQR.Models
         public virtual DbSet<Nhom_ToThucHanh> Nhom_ToThucHanh { get; set; }
         public virtual DbSet<Phong> Phongs { get; set; }
         public virtual DbSet<QR> QRs { get; set; }
+        public virtual DbSet<Quyen> Quyens { get; set; }
         public virtual DbSet<SinhVien> SinhViens { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TaiKhoanKhoa> TaiKhoanKhoas { get; set; }
@@ -65,6 +66,10 @@ namespace DiemDanhQR.Models
                 .Property(e => e.MaMon)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Nhom_ToThucHanh>()
+                .Property(e => e.Nhom)
+                .IsUnicode(false);
+
             modelBuilder.Entity<SinhVien>()
                 .Property(e => e.MSSV)
                 .IsUnicode(false);
@@ -103,6 +108,10 @@ namespace DiemDanhQR.Models
 
             modelBuilder.Entity<ThoiKhoaBieu_DiemDanh>()
                 .Property(e => e.MSSV)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ThoiKhoaBieu_DiemDanh>()
+                .Property(e => e.BuoiHoc)
                 .IsUnicode(false);
         }
     }

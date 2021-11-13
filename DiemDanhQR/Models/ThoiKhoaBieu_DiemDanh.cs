@@ -16,39 +16,15 @@ namespace DiemDanhQR.Models
 
         public int? MaLopMon { get; set; }
 
-        public bool? BuoiHoc1 { get; set; }
-
-        public bool? BuoiHoc2 { get; set; }
-
-        public bool? BuoiHoc3 { get; set; }
-
-        public bool? BuoiHoc4 { get; set; }
-
-        public bool? BuoiHoc5 { get; set; }
-
-        public bool? BuoiHoc6 { get; set; }
-
-        public bool? BuoiHoc7 { get; set; }
-
-        public bool? BuoiHoc8 { get; set; }
-
-        public bool? BuoiHoc9 { get; set; }
-
-        public bool? BuoiHoc10 { get; set; }
-
-        public bool? BuoiHoc11 { get; set; }
-
-        public bool? BuoiHoc12 { get; set; }
-
-        public bool? BuoiHoc13 { get; set; }
-
-        public bool? BuoiHoc14 { get; set; }
-
-        public bool? BuoiHoc15 { get; set; }
+        [StringLength(100)]
+        public string BuoiHoc { get; set; }
 
         public string MoTa { get; set; }
 
         public bool? LaBanCanSu { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? NgayDuyet { get; set; }
 
         public virtual LopMon LopMon { get; set; }
 

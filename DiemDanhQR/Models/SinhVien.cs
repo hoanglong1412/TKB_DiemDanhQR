@@ -22,7 +22,6 @@ namespace DiemDanhQR.Models
         [StringLength(50)]
         public string HoTen { get; set; }
 
-        [StringLength(20)]
         public string MatKhau { get; set; }
 
         [StringLength(20)]

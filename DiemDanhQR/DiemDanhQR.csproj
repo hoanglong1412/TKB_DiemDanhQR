@@ -119,6 +119,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
     <Compile Include="DAO\LopMonDAO.cs" />
+    <Compile Include="DAO\SinhVienDAO.cs" />
     <Compile Include="DAO\ThoiKhoaBieuDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -133,6 +134,7 @@
     <Compile Include="Models\Nhom_ToThucHanh.cs" />
     <Compile Include="Models\Phong.cs" />
     <Compile Include="Models\QR.cs" />
+    <Compile Include="Models\Quyen.cs" />
     <Compile Include="Models\SinhVien.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TaiKhoanKhoa.cs" />
@@ -148,6 +150,8 @@
     <Content Include="Views\SinhVien\DangNhap.cshtml" />
     <Content Include="Views\SinhVien\ThoiKhoaBieu.cshtml" />
     <Content Include="Views\SinhVien\ThoiKhoaBieuTheoTuan.cshtml" />
+    <Content Include="Views\SinhVien\DanhSachDiemDanh.cshtml" />
+    <Content Include="Views\SinhVien\DanhSachLop.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
