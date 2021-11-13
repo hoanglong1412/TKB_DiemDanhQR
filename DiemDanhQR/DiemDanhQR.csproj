@@ -117,7 +117,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\GiangVien\Controllers\GiangVienController.cs" />
+    <Compile Include="Areas\GiangVien\GiangVienAreaRegistration.cs" />
+    <Compile Include="Areas\Khoa\KhoaAreaRegistration.cs" />
     <Compile Include="Controllers\SinhVienController.cs" />
+    <Compile Include="DAO\LichGiangDayDAO.cs" />
     <Compile Include="DAO\LopMonDAO.cs" />
     <Compile Include="DAO\SinhVienDAO.cs" />
     <Compile Include="DAO\ThoiKhoaBieuDAO.cs" />
@@ -144,6 +148,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\DangNhap_gv.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\Index_gv.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\LichGiangDay.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\LichGiangDayTheoTuan.cshtml" />
+    <Content Include="Areas\GiangVien\Views\Shared\_LayoutGiangVien.cshtml" />
+    <Content Include="Areas\GiangVien\Views\web.config" />
+    <Content Include="Areas\Khoa\Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LayoutSinhVien.cshtml" />
     <Content Include="Views\SinhVien\Index.cshtml" />
@@ -161,6 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\GiangVien\Data\" />
+    <Folder Include="Areas\Khoa\Controllers\" />
+    <Folder Include="Areas\Khoa\Data\" />
+    <Folder Include="Areas\Khoa\Views\Shared\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

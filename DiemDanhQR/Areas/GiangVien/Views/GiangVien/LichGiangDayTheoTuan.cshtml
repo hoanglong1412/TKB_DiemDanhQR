@@ -1,0 +1,179 @@
+﻿@using System;
+@{
+    ViewBag.Title = "LichGiangDayTheoTuan";
+    Layout = "~/Areas/GiangVien/Views/Shared/_LayoutGiangVien.cshtml";
+}
+
+@{
+    var Monday = new DateTime();
+    var Sunday = new DateTime();
+    var StudyDay = new DateTime();
+    var date = ViewBag.date != null ? ViewBag.date : DateTime.Now;
+    switch (date.DayOfWeek.ToString())
+    {
+        case "Monday":
+            Monday = date;
+            Sunday = date.AddDays(6);
+            break;
+
+        case "Tuesday":
+            Monday = date.AddDays(-1);
+            Sunday = date.AddDays(5);
+            break;
+
+        case "Wednesday":
+            Monday = date.AddDays(-2);
+            Sunday = date.AddDays(4);
+            break;
+
+        case "Thursday":
+            Monday = date.AddDays(-3);
+            Sunday = date.AddDays(3);
+            break;
+
+        case "Friday":
+            Monday = date.AddDays(-4);
+            Sunday = date.AddDays(2);
+            break;
+
+        case "Saturday":
+            Monday = date.AddDays(-5);
+            Sunday = date.AddDays(1);
+            break;
+
+        case "Sunday":
+            Monday = date.AddDays(-6);
+            Sunday = date;
+            break;
+    }
+}
+
+
+
+
+<style>
+    .btn-changeweek {
+        color: #fff;
+        padding: 6px 10px;
+        background: #3276B1;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+        .btn-changeweek:first-child {
+            margin-right: 30px;
+        }
+
+        .btn-changeweek:last-child {
+            margin-left: 30px;
+        }
+
+    .Top_week_schedule {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+</style>
+
+<div class="Top_week_schedule">
+    <h2>Thời khóa biểu theo tuần</h2>
+    <div>
+        <a class="btn-changeweek" href="@Url.Action("LichGiangDayTheoTuan","GiangVien",new{  date = date.AddDays(-7) })"><</a>
+        Từ ngày<b> @Monday.ToString("dd/MM/yyyy")</b> đến <b>@Sunday.ToString("dd/MM/yyyy")</b>
+        <a class="btn-changeweek" href="@Url.Action("LichGiangDayTheoTuan","GiangVien",new{  date = date.AddDays(7) })">></a>
+    </div>
+</div>
+
+
+
+<div class="content_title">
+    <div class="left">
+        <b>Tiết</b>
+        <span><b>Mã môn học - Tên môn học</b></span>
+    </div>
+    <div class="right hide-on-mobile">
+        <b>Thông tin tiết học</b>
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    if (item.LopMon.NgayBatDau.AddDays(-6) < Monday && item.LopMon.NgayKetThuc.AddDays(7) > Sunday)
+    {
+        switch (item.LopMon.BuoiHoc.Thu.MaThu)
+        {
+            case 2:
+                StudyDay = Monday;
+                break;
+
+            case 3:
+                StudyDay = Monday.AddDays(1);
+                break;
+
+            case 4:
+                StudyDay = Monday.AddDays(2);
+                break;
+
+            case 5:
+                StudyDay = Monday.AddDays(3);
+                break;
+
+            case 6:
+                StudyDay = Monday.AddDays(4);
+                break;
+
+            case 7:
+                StudyDay = Sunday.AddDays(5);
+                break;
+
+            case 8:
+                StudyDay = Sunday;
+                break;
+        }
+        <div class="content_main">
+            <p class="title">@item.LopMon.BuoiHoc.Thu.TenThu, ngày @StudyDay.ToString("dd/MM/yyyy")</p>
+            <div class="hold">
+                <div class="left">
+                    @*de show ben popup*@
+                    <div class="hiden_info" style="display:none;">
+                        <span class="MaMon">@item.LopMon.MonHoc.MaMon</span>
+                        <span class="TenMon">@item.LopMon.MonHoc.TenMon</span>
+                        <span class="Nhom">@item.LopMon.Nhom_ToThucHanh.Nhom</span>
+                        <span class="SoTinChi">@item.LopMon.MonHoc.SoTinhChi</span>
+                        <span class="Thu">@item.LopMon.BuoiHoc.Thu.MaThu</span>
+                        <span class="TietBatDau">@item.LopMon.BuoiHoc.TietBatDau</span>
+                        <span class="MaPhong">@item.LopMon.MaPhong</span>
+                        <span class="TenGiaoVien">@item.LopMon.GiaoVien.HoTen</span>
+                        <span class="MaGiaoVien">@item.LopMon.GiaoVien.MaGiaoVien</span>
+                        <span class="LopMon">@item.LopMon.TenLopMon</span>
+                        <span class="NgayHoc">@StudyDay.ToString("dd/MM/yyyy")</span>
+                        <span class="Tiet">@item.LopMon.BuoiHoc.TietBatDau - @(item.LopMon.BuoiHoc.TietBatDau + item.LopMon.BuoiHoc.SoTiet - 1)</span>
+                        @if (@item.LopMon.Nhom_ToThucHanh.ToThucHanh == 1)
+                        {
+                            <span class="TenPhong">Phòng thực hành</span>
+                        }
+                        else
+                        {
+                            <span class="TenPhong">Phòng lý thuyết</span>
+
+                        }
+                        <span>
+                            @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
+                            @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
+                        </span>
+                    </div>
+
+                    <b style="color: red;">@item.LopMon.BuoiHoc.TietBatDau-@(item.LopMon.BuoiHoc.TietBatDau + item.LopMon.BuoiHoc.SoTiet - 1)</b>
+                    <p class="TenMon">
+                        @item.LopMon.MonHoc.MaMon - @item.LopMon.MonHoc.TenMon
+                    </p>
+                    <br>
+                </div>
+                <div class="right hide-on-mobile">
+                    <p>Phòng: <b>@item.LopMon.MaPhong</b> - Lớp: @item.LopMon.TenLopMon</p>
+                </div>
+            </div>
+        </div>
+    }
+}
+
