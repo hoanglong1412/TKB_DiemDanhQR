@@ -48,22 +48,23 @@
             {
                 <h1>som</h1>
             }*@
-        <tr>
-            <td>@item.LopMon.MonHoc.MaMon</td>
-            <td style="width:360px;">@item.LopMon.MonHoc.TenMon</td>
-            <td>@item.LopMon.Nhom_ToThucHanh.Nhom</td>
-            <td>@item.LopMon.MonHoc.SoTinhChi</td>
-            <td>@item.LopMon.Nhom_ToThucHanh.ToThucHanh</td>
-            <td>@item.LopMon.BuoiHoc.Thu.TenThu</td>
-            <td>@item.LopMon.BuoiHoc.TietBatDau</td>
-            <td>@item.LopMon.BuoiHoc.SoTiet</td>
-            <td>@item.LopMon.MaPhong</td>
-            <td>@item.LopMon.GiaoVien.HoTen</td>
-            <td>
-                @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
-                @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
-            </td>
-        </tr>
+<tr>
+    <td>@item.LopMon.MonHoc.MaMon</td>
+    <td style="width:360px;">@item.LopMon.MonHoc.TenMon</td>
+    <td>@item.LopMon.Nhom_ToThucHanh.Nhom</td>
+    <td>@item.LopMon.MonHoc.SoTinhChi</td>
+    <td>@item.LopMon.Nhom_ToThucHanh.ToThucHanh</td>
+    <td>@item.LopMon.BuoiHoc.Thu.TenThu</td>
+    <td>@item.LopMon.BuoiHoc.TietBatDau</td>
+    <td>@item.LopMon.BuoiHoc.SoTiet</td>
+    <td>@item.LopMon.MaPhong</td>
+    <td>@item.LopMon.GiaoVien.HoTen</td>
+    <td>
+        @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
+        @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
+    </td>
+    <td><a class="btn-changeweek" href="@Url.Action("TaoMaQR","GiangVien",new{  id = item.MaLopMon })">zo ne</a></td>
+</tr>
     }
 
 </table>

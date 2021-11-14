@@ -14,9 +14,9 @@ namespace DiemDanhQR.DAO
             db = new MyDBContext();
         }
 
-        public IEnumerable<ThoiKhoaBieu_DiemDanh> LayLichGiangDay(int? maLopMon)
+        public ThoiKhoaBieu_DiemDanh LayLichGiangDay(int? maLopMon)
         {
-            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_LGD = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == maLopMon);
+            ThoiKhoaBieu_DiemDanh ds_LGD = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == maLopMon).FirstOrDefault();
             return ds_LGD;
         }
     }
