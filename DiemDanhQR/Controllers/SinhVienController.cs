@@ -51,5 +51,16 @@ namespace DiemDanhQR.Controllers
             ViewBag.TKB = TKB;
             return View(ds_TKB);
         }
+
+
+        [HttpPost]
+        public ActionResult XacNhanDanhSachDiemDanh(FormCollection form)
+        {
+            string txtMaLopMon = form.Get("MaLopMon");
+            int MaLopMon = int.Parse(txtMaLopMon) > 0 ? int.Parse(txtMaLopMon) : 0;
+            thoikhoabieuDAO.CapNhatXacNhanDiemDanh(MaLopMon, "1811063022", DateTime.Now);
+
+            return RedirectToAction("Index");
+        }
     }
 }
