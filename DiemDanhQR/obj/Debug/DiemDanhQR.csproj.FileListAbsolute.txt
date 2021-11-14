@@ -155,3 +155,8 @@ C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\ExcelDataReader
 C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.xml
 C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.DataSet.pdb
 C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.DataSet.xml
+C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\EPPlus.dll
+C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\Microsoft.IO.RecyclableMemoryStream.dll
+C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\System.ComponentModel.Annotations.dll
+C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\EPPlus.xml
+C:\D\DoAn_WebThoiKhoaBieu_DiemDanh\TKB_DiemDanhQR\DiemDanhQR\bin\Microsoft.IO.RecyclableMemoryStream.xml

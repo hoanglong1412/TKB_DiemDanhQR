@@ -14,5 +14,6 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             return View();
         }
 
+
     }
 }

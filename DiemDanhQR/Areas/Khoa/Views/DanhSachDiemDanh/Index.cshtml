@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Khoa/Views/Shared/_LayoutKhoa.cshtml";
+}
+
+<h2>DanhSachLop</h2>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+</style>
+<h2>Thời Khóa Biểu</h2>
+
+
+<table>
+    <tr>
+        <th>Mã MH</th>
+        <th>Tên MH</th>
+        <th>Nhóm</th>
+        <th>STC</th>
+        <th>TH</th>
+        <th>Thứ</th>
+        <th>Tiết BD	</th>
+        <th>ST</th>
+        <th>Phòng</th>
+        <th>GVHD</th>
+        <th>Thời gian</th>
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        @*if (item.LopMon.NgayKetThuc <= DateTime.Now)
+            {
+                <h1>tre</h1>
+            }
+            else
+            {
+                <h1>som</h1>
+            }*@
+        <tr>
+            <td>@item.MaMon</td>
+            <td style="width:360px;">@item.MonHoc.TenMon</td>
+            <td>@item.Nhom_ToThucHanh.Nhom</td>
+            <td>@item.MonHoc.SoTinhChi</td>
+            <td>@item.Nhom_ToThucHanh.ToThucHanh</td>
+            <td>@item.BuoiHoc.Thu.TenThu</td>
+            <td>@item.BuoiHoc.TietBatDau</td>
+            <td>@item.BuoiHoc.SoTiet</td>
+            <td>@item.MaPhong</td>
+            <td>@item.GiaoVien.HoTen</td>
+            <td>
+                @item.NgayBatDau.ToString("dd/MM/yyyy")<br />
+                @item.NgayKetThuc.ToString("dd/MM/yyyy")
+            </td>
+            <td><a class="btn-changeweek" href="@Url.Action("DanhSach","DanhSachDiemDanh",new{  malopmon = item.MaLopMon })">zo ne</a></td>
+        </tr>
+    }
+
+</table>
+

@@ -49,6 +49,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=5.8.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.8.2\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
     </Reference>
@@ -56,9 +59,17 @@
       <HintPath>..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -131,6 +142,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\GiangVien\Controllers\GiangVienController.cs" />
     <Compile Include="Areas\GiangVien\GiangVienAreaRegistration.cs" />
+    <Compile Include="Areas\Khoa\Controllers\DanhSachDiemDanhController.cs" />
     <Compile Include="Areas\Khoa\Controllers\ThemDanhSachSinhVienController.cs" />
     <Compile Include="Areas\Khoa\Controllers\ThemThoiKhoaBieuController.cs" />
     <Compile Include="Areas\Khoa\Controllers\TrangChuController.cs" />
@@ -176,6 +188,8 @@
     <Content Include="Areas\Khoa\Views\ThemThoiKhoaBieu\Success.cshtml" />
     <Content Include="Areas\Khoa\Views\ThemDanhSachSinhVien\Index.cshtml" />
     <Content Include="Areas\Khoa\Views\ThemDanhSachSinhVien\Success.cshtml" />
+    <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\Index.cshtml" />
+    <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\DanhSach.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LayoutSinhVien.cshtml" />
     <Content Include="Views\SinhVien\Index.cshtml" />

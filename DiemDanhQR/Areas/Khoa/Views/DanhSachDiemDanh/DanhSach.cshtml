@@ -1,0 +1,130 @@
+﻿@using DiemDanhQR.Models;
+@using DiemDanhQR.DAO;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    ViewBag.Title = "DanhSach";
+    Layout = "~/Areas/Khoa/Views/Shared/_LayoutKhoa.cshtml";
+}
+
+<h2>Bảng điểm danh</h2>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+    }
+</style>
+
+@{
+    int count = 0;
+    DateTime date1 = ViewBag.TKB.LopMon.NgayBatDau;
+    DateTime date2 = ViewBag.TKB.LopMon.NgayKetThuc;
+    TimeSpan d3 = date2 - date1;
+    int KhoangThoiGian = d3.Days;
+    int SoBuoiHoc = KhoangThoiGian / 7 + 1;
+    int ma = ViewBag.maLopMon;
+}
+
+<div class="card">
+    <div class="card-header">
+        @*<button onclick="DownloadExcel()" class="btn  btn-success" style="margin-top:20px;">Excel Export</button>*@
+        <a href="@Url.Action("XuatExcelDanhSachDiemDanh","DanhSachDiemDanh",new{  maLopMon = ma })" class="btn btn-success" style="margin-top:20px;">Excel Export</a>
+    </div>
+</div>
+<table>
+    <tr>
+
+        <th>MSSV</th>
+        <th>Họ Tên</th>
+
+        @for (int i = 1; i <= SoBuoiHoc; i++)
+        {
+            <th>@date1.AddDays(7 * i - 7).ToString("dd/MM")</th>
+        }
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr class="Row_Count">
+            <td>@item.MSSV</td>
+            <td>@item.SinhVien.HoTen</td>
+
+            @for (int i = 1; i <= SoBuoiHoc; i++)
+            {
+                <td class="Delete_Column">
+                    <span class="array_number" my-data="@item.BuoiHoc"></span>
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    const Row_Count = document.querySelectorAll('.Row_Count');
+    var my_array = [];
+
+    // lấy số lớn nhất ở các hàng
+    Row_Count.forEach(row => {
+        var array_number = row.querySelector('.Delete_Column .array_number').getAttribute('my-data').split(',');
+        var max_number = (Math.max.apply(Math, array_number));
+        my_array.push(max_number);
+    })
+
+    var max_my_array = Math.max.apply(Math, my_array)
+
+    // lặp từ số lớn nhất xuống, nếu mảng nào chứa buổi điểm danh nào thì hiện
+    for (var j = 0; j < Row_Count.length; j++) {
+        var my_row = Row_Count[j];
+        //var text_number = my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data');
+        var array_number = my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data').split(',');
+        const tds = my_row.querySelectorAll('.Delete_Column');
+        for (var i = max_my_array; i > 0; i--) {
+            if (array_number.indexOf(i.toString()) != -1) {
+                tds[i - 1].innerHTML = `
+                        <i class="fas fa-check DaDiemDanh"></i>
+                    `;
+            }
+            else {
+                tds[i - 1].innerHTML = `
+                        <i class="fas fa-times ChuaDiemDanh"></i>
+                    `;
+            }
+
+        }
+    }
+</script>
+@*<script>
+    function DownloadExcel() {
+        $.ajax({
+            type: "POST",
+            url: "/DanhSachDiemDanh/XuatExcelDanhSachDiemDanh",
+            cache: false,
+            success: function (data) {
+                window.location = '/DanhSachDiemDanh/Download';
+            },
+            error: function (data) {
+                Materialize.toast("Something went wrong. ", 3000, 'rounded');
+            }
+        });
+    }
+</script>*@
+
+

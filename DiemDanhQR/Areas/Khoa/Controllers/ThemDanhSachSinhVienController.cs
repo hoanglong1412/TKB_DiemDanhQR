@@ -163,7 +163,11 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             if (ktr == 1)
                 return View("Success");
             else
+            {
+
                 return View("Success");
+            }    
+                
         }
 
         public bool KiemTraCauTruc_DSSV()
