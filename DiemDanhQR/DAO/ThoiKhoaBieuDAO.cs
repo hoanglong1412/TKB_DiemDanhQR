@@ -22,7 +22,8 @@ namespace DiemDanhQR.DAO
 
         public IEnumerable<ThoiKhoaBieu_DiemDanh> LayThoiKhoaBieuTheoThuTrongTuan(string mssv)
         {
-            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MSSV == mssv).OrderBy(m => m.LopMon.BuoiHoc.MaThu);
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MSSV == mssv).OrderBy(m => m.LopMon.BuoiHoc.MaThu)
+                   .ThenBy(m => m.LopMon.BuoiHoc.TietBatDau);
             return ds_TKB;
         }
 
@@ -42,6 +43,20 @@ namespace DiemDanhQR.DAO
         {
             ThoiKhoaBieu_DiemDanh TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == malopmon).FirstOrDefault();
             return TKB;
+        }
+
+        public ThoiKhoaBieu_DiemDanh LayThoiKhoaBieuTheoMonVaSinhVien(int malopmon, string mssv)
+        {
+            ThoiKhoaBieu_DiemDanh TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == malopmon && m.MSSV == mssv).FirstOrDefault();
+            return TKB;
+        }
+
+        public ThoiKhoaBieu_DiemDanh CapNhatXacNhanDiemDanh(int malopmon, string mssv, DateTime NgayCapNhat)
+        {
+            ThoiKhoaBieu_DiemDanh row = LayThoiKhoaBieuTheoMonVaSinhVien(malopmon, mssv);
+            row.NgayDuyet = NgayCapNhat;
+            db.SaveChanges();
+            return row;
         }
     }
 }
