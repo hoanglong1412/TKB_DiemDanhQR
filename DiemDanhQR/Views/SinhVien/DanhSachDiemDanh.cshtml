@@ -109,11 +109,7 @@
 </style>
 
 <h2>Bảng điểm danh</h2>
-<form method="post" action="@Url.Action("XacNhanDanhSachDiemDanh","SinhVien")" class="XacNhanForm">
-    <input name="NgayXacNhan" />
-    <input name="MaLopMon" value="@ViewBag.TKB.LopMon.MaLopMon" />
-    <button type="submit">Xác nhận</button>
-</form>
+
 @*<a href="@Url.Action("XacNhanDanhSachDiemDanh","SinhVien" , new { MaLopMon = ViewBag.TKB.LopMon.MaLopMon})" class="">Xacs nhajn</a>*@
 <table>
     <tr>
@@ -146,8 +142,15 @@
     }
 
 </table>
-
-
+<p style="margin-top:30px"></p>
+<hr />
+<p style="color:red;font-size:12px;margin-top:16px;font-style:italic;">* Bạn chỉ có thể sử dụng chức năng này trong 6 ngày kể từ khi môn học kết thúc</p>
+<textarea rows="4" cols="50" name="MoTa" style="width:100%; margin-top:6px;" id="MoTa" placeholder="Ghi chú thêm (các trường hợp sai xót trong danh sách điểm danh)" form="XacNhanForm">@ViewBag.TKB.MoTa</textarea>
+<form method="post" action="@Url.Action("XacNhanDanhSachDiemDanh","SinhVien")" class="XacNhanForm" id="XacNhanForm" style="margin-top:10px;display:flex;justify-content:flex-end">
+    <input name="MaLopMon" value="@ViewBag.TKB.LopMon.MaLopMon" hidden />
+    <button type="submit" style="padding: 10px 24px; background: #3BD09C; border-radius:40px;border:none; color:#fff">Xác nhận</button>
+</form>
+<hr />
 <script>
     const Row_Count = document.querySelectorAll('.Row_Count');
     var my_array = [];
@@ -194,8 +197,7 @@
 
     const XacNhanFormBtn = document.querySelector('.XacNhanForm button')
     const XacNhanFormInput = document.querySelector('.XacNhanForm #NgayXacNhan')
-    XacNhanFormInput.value = JSdate;
-
+    const MoTaForm = document.querySelector('#MoTa')
     let distanceDay = date - @CDate
     if (date == @CDate && @CMonth == month && @CYear == year || date - @CDate == 1 && @CMonth == month && @CYear == year ||
         date - @CDate == 2 && @CMonth == month && @CYear == year || date - @CDate == 3 && @CMonth == month && @CYear == year ||
@@ -213,8 +215,14 @@
     }
     else {
         XacNhanFormBtn.setAttribute('disabled', 'disabled')
+        XacNhanFormBtn.style.background = '#DFE0EB'
+        XacNhanFormBtn.style.color = '#ABACB8'
+        MoTaForm.setAttribute('disabled', 'disabled')
     }
 
+    XacNhanFormBtn.onlick = () => {
+        alert('ok');
+    }
     //if (JSdate == CDate) {
     //    console.log('ngày bên C# trùng ngày bên JS')
     //} else {
