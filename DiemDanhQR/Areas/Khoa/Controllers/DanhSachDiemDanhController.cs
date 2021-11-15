@@ -14,12 +14,17 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
 {
     public class DanhSachDiemDanhController : Controller
     {
+
         MyDBContext data = new MyDBContext();
         ThoiKhoaBieuDAO thoikhoabieuDAO = new ThoiKhoaBieuDAO();
-        private int maLM;
         // GET: Khoa/DanhSachDiemDanh
         public ActionResult Index()
         {
+            TaiKhoanKhoa khoa = (TaiKhoanKhoa)Session["taiKhoanKhoa"];
+            if (khoa == null)
+            {
+                return RedirectToAction("DangNhap", "TrangChu");
+            }
             var list = data.LopMons.ToList();
             var tkb = data.ThoiKhoaBieu_DiemDanh.ToList();
             List<int> listMaLopMon = new List<int>();
@@ -73,34 +78,94 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         public ActionResult XuatExcelDanhSachDiemDanh(int maLopMon)
         {
             List<ThoiKhoaBieu_DiemDanh> listTKB_DD = data.ThoiKhoaBieu_DiemDanh.ToList();
+            LopMon lopMon = data.LopMons.Where(m => m.MaLopMon == maLopMon).FirstOrDefault();
+            ThoiKhoaBieu_DiemDanh tkb = data.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == maLopMon).FirstOrDefault();
+                DateTime date1 = (DateTime)lopMon.NgayBatDau;
+                DateTime date2 = (DateTime)lopMon.NgayKetThuc;
+                TimeSpan d3 = date2 - date1;
+                int KhoangThoiGian = d3.Days;
+                int SoBuoiHoc = KhoangThoiGian / 7 + 1;
+                int ThuCuaNgayDau = 0;
+                DateTime NgayDauHoc = new DateTime();
+                int Thu = (int)lopMon.BuoiHoc.MaThu;
+                switch (date1.DayOfWeek.ToString())
+                {
+                    case "Monday":
+                        ThuCuaNgayDau = 2;
+                        break;
 
+                    case "Tuesday":
+                        ThuCuaNgayDau = 3;
+                        break;
+
+                    case "Wednesday":
+                        ThuCuaNgayDau = 4;
+                        break;
+
+                    case "Thursday":
+                        ThuCuaNgayDau = 5;
+                        break;
+
+                    case "Friday":
+                        ThuCuaNgayDau = 6;
+                        break;
+
+                    case "Saturday":
+                        ThuCuaNgayDau = 7;
+                        break;
+
+                    case "Sunday":
+                        ThuCuaNgayDau = 8;
+                        break;
+                }
+
+                if (ThuCuaNgayDau - Thu == 0)
+                {
+                    NgayDauHoc = date1;
+                }
+                else if (ThuCuaNgayDau - Thu == 1 || ThuCuaNgayDau - Thu == -6)
+                {
+                    NgayDauHoc = date1.AddDays(6);
+                }
+                else if (ThuCuaNgayDau - Thu == 2 || ThuCuaNgayDau - Thu == -5)
+                {
+                    NgayDauHoc = date1.AddDays(5);
+                }
+                else if (ThuCuaNgayDau - Thu == 3 || ThuCuaNgayDau - Thu == -4)
+                {
+                    NgayDauHoc = date1.AddDays(4);
+                }
+                else if (ThuCuaNgayDau - Thu == 4 || ThuCuaNgayDau - Thu == -3)
+                {
+                    NgayDauHoc = date1.AddDays(3);
+                }
+                else if (ThuCuaNgayDau - Thu == 5 || ThuCuaNgayDau - Thu == -2)
+                {
+                    NgayDauHoc = date1.AddDays(2);
+                }
+                else if (ThuCuaNgayDau - Thu == 6 || ThuCuaNgayDau - Thu == -1)
+                {
+                    NgayDauHoc = date1.AddDays(1);
+                }
             try
             {
 
                 DataTable Dt = new DataTable();
                 Dt.Columns.Add("MSSV", typeof(string));
                 Dt.Columns.Add("Họ tên", typeof(string));
-                Dt.Columns.Add("Buổi 1", typeof(string));
-                Dt.Columns.Add("Buổi 2", typeof(string));
-                Dt.Columns.Add("Buổi 3", typeof(string));
-                Dt.Columns.Add("Buổi 4", typeof(string));
-                Dt.Columns.Add("Buổi 5", typeof(string));
-                Dt.Columns.Add("Buổi 6", typeof(string));
-                Dt.Columns.Add("Buổi 7", typeof(string));
-                Dt.Columns.Add("Buổi 8", typeof(string));
-                Dt.Columns.Add("Buổi 9", typeof(string));
-                Dt.Columns.Add("Buổi 10", typeof(string));
-                Dt.Columns.Add("Buổi 11", typeof(string));
-                Dt.Columns.Add("Buổi 12", typeof(string));
+                for(int i = 1; i <= SoBuoiHoc; i++)
+                {
+                    Dt.Columns.Add(NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM"), typeof(string));
+                }    
 
                 foreach (var item in listTKB_DD)
                 {
-                    if (item.MaLopMon ==maLopMon)
+                    if (item.MaLopMon == maLopMon)
                     {
                         DataRow row = Dt.NewRow();
                         row[0] = item.MSSV;
                         row[1] = item.SinhVien.HoTen;
-                        for (var i = 2; i < 8; i++)
+                        for (var i = 2; i <= SoBuoiHoc+1; i++)
                         {
 
                             if (item.BuoiHoc != null)
@@ -121,6 +186,15 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                         Dt.Rows.Add(row);
                     }
                 }
+                string fName;
+                if (tkb.NgayDuyet != null)
+                {
+                    fName = lopMon.MaMon + "_" + lopMon.Nhom_ToThucHanh.Nhom + "_" + lopMon.Nhom_ToThucHanh.ToThucHanh.ToString() + "_" + "DaDuyet.xlsx";
+                }
+                else
+                {
+                    fName = lopMon.MaMon + "_" + lopMon.Nhom_ToThucHanh.Nhom + "_" + lopMon.Nhom_ToThucHanh.ToThucHanh.ToString() + "_" + "ChuaDuyet.xlsx";
+                }
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 var memoryStream = new MemoryStream();
                 using (var excelPackage = new ExcelPackage(new FileInfo("MyWorkbook.xlsx")))
@@ -139,32 +213,31 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                     worksheet.Column(1).AutoFit();
                     worksheet.Column(2).AutoFit();
 
-                    Session["DownloadExcel_FileManager"] = excelPackage.GetAsByteArray();
-                    byte[] data = Session["DownloadExcel_FileManager"] as byte[];
-                    return File(data, "application/octet-stream", "FileManager.xlsx");
+                    //Session["DownloadExcel_FileManager"] = excelPackage.GetAsByteArray();
+                    byte[] data = excelPackage.GetAsByteArray() as byte[];
+                    return File(data, "application/octet-stream", fName);
                     //return Json("", JsonRequestBehavior.AllowGet);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex.Message);
             }
-
-
+            return View();
         }
 
-        public ActionResult Download()
-        {
+        //public ActionResult Download()
+        //{
 
-            if (Session["DownloadExcel_FileManager"] != null)
-            {
-                byte[] data = Session["DownloadExcel_FileManager"] as byte[];
-                return File(data, "application/octet-stream", "FileManager.xlsx");
-            }
-            else
-            {
-                return new EmptyResult();
-            }
-        }
+        //    if (Session["DownloadExcel_FileManager"] != null)
+        //    {
+        //        byte[] data = Session["DownloadExcel_FileManager"] as byte[];
+        //        return File(data, "application/octet-stream", "FileManager.xlsx");
+        //    }
+        //    else
+        //    {
+        //        return new EmptyResult();
+        //    }
+        //}
     }
 }

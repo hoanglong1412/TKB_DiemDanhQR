@@ -22,7 +22,8 @@
                 </div>
                 <div class="col-md-offset-2 col-md-10 my-3">
                     <input type="submit" value="Đọc Excel" class="btn btn-primary" />
-                    <a href="@Url.Action("ThemDS","ThemDanhSachSinhVien")" class="btn btn-success">Thêm dữ liệu vào SQL</a>
+                    <a href="@Url.Action("ThemDS","ThemDanhSachSinhVien", new { name = ViewBag.FileName})" class="btn btn-success">Thêm dữ liệu vào SQL</a>
+                    <a href="@Url.Action("XuatExcelMauThemDSSV", "ThemDanhSachSinhVien")" class="btn btn-success">Tải file excel mẫu</a>
                 </div>
             </div>
         }
