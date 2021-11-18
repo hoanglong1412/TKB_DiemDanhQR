@@ -116,10 +116,11 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         public System.Web.Mvc.ActionResult ThemDS(string name)
         {
             int ktr = 0;
-            ViewBag.ThongBao = "";
             int importSuccess = 0;
             int importFail = 0;
-            string importFailIndex = "";
+            //string importFailIndex = "";
+            List<int> indexError = new List<int>();
+            DataTable table = new DataTable();
             fileName = name;
             if(fileName != null)
             {
@@ -159,7 +160,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                     dataTable.Rows[i].Delete();
                             }
                             dataTable.AcceptChanges();
-
+                            table = dataTable;
                             for (var i = 0; i < dataTable.Rows.Count; i++)
                             {
                                 if (KiemtraColumEmpty_DSSV(i))
@@ -171,13 +172,15 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                     else
                                     {
                                         importFail++;
-                                        importFailIndex = importFailIndex + (i + 1).ToString() + " ";
+                                        indexError.Add(i + 1);
+                                        //importFailIndex = importFailIndex + (i + 1).ToString() + " ";
                                     }
                                 }
                                 else
                                 {
                                     importFail++;
-                                    importFailIndex = importFailIndex + (i + 1).ToString() + " ";
+                                    indexError.Add(i + 1);
+                                    //importFailIndex = importFailIndex + (i + 1).ToString() + " ";
                                 }
                             }
                             ktr = 1;
@@ -195,7 +198,8 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             
             ViewBag.ImportSuccess = importSuccess;
             ViewBag.ImportFail = importFail;
-            ViewBag.ImportFailIndex = importFailIndex;
+            ViewBag.ImportFailIndex = indexError;
+            ViewData.Model = table;
             if (ktr == 1)
                 return View("Success");
             else
@@ -401,7 +405,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 dataSinhVien.Email = dataTable.Rows[index][13].ToString();
                 dataSinhVien.SDT = dataTable.Rows[index][14].ToString();
                 dataSinhVien.MaLop = dataTable.Rows[index][12].ToString();
-                dataSinhVien.MatKhau = "123456";
+                dataSinhVien.MatKhau = dataTable.Rows[index][8].ToString();
                 dataSinhVien.LaBanCanSu = false;
             }
             catch { dataSinhVien = null; }

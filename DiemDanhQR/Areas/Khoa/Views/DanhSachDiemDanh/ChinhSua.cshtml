@@ -34,6 +34,7 @@
 <h2>Bảng điểm danh</h2>
 @{
     int count = 0;
+    int BuoiĐDCuoi = ViewBag.BuoiDiemDanhCuoi;
     DateTime date1 = ViewBag.TKB.LopMon.NgayBatDau;
     DateTime date2 = ViewBag.TKB.LopMon.NgayKetThuc;
     TimeSpan d3 = date2 - date1;
@@ -46,6 +47,8 @@
     string CDate = date2.ToString("dd");
     string CMonth = date2.ToString("MM");
     string CYear = date2.ToString("yyyy");
+
+    string buoi = "";
 
 
     switch (date1.DayOfWeek.ToString())
@@ -108,7 +111,7 @@
         NgayDauHoc = date1.AddDays(1);
     }
 }
-<form action="~/Areas/Khoa/DanhSachDiemDanh/ChinhSua" method="post">
+<form action="/Khoa/DanhSachDiemDanh/ChinhSua" method="post">
     <table>
         <tr>
             <th>MSSV</th>
@@ -120,25 +123,51 @@
             }
 
         </tr>
-        {
+        
         <tr class="Row_Count">
             <td>@Model.MSSV</td>
             <td>@Model.SinhVien.HoTen</td>
 
-            @for (int i = 1; i <= SoBuoiHoc; i++)
+            @for (int i = 1; i <= BuoiĐDCuoi; i++)
             {
-                <td class="Delete_Column">
+                buoi = @Model.BuoiHoc;
+                <td class="Delete_Column" onclick="ChonCanSu(@i)">
                     <span class="array_number" my-data="@Model.BuoiHoc"></span>
                 </td>
+
+            }
+            @if (SoBuoiHoc > BuoiĐDCuoi)
+            {
+                for (int i = BuoiĐDCuoi+1; i <= SoBuoiHoc; i++)
+                {
+                 <td class="Delete_Column" onclick="ChonCanSu(@i)">
+                     <i class="fas fa-times ChuaDiemDanh ttt@(i-1)"></i>
+                  </td>  
+                }
             }
         </tr>
     </table>
-    <input name="matkb" type="text" value="" style="width=100%"><br>
-    <input name="buoitich" type="text" value="" style="width=100%; height=500px"><br>
-    <button type="submit">Lưu</button>
+    <input hidden name="matkb" type="text" value="@ViewBag.TKB.MaThoiKhoaBieu" style="width=100%" >
+    <input hidden name="buoichon" type="text" value="" style="width=100%; height=500px" class="getAllData" >
+    <button style="margin:10px 0 0 95%;font-size:1.3em;padding:8px 12px;" type="submit">Lưu</button>
 </form>
 
+<script>
 
+    const GetAllData = document.querySelector('.getAllData');
+    var chuoi = "";
+    function ChonCanSu(index) {
+        var str1 = '.Delete_Column  .ttt' + (index-1).toString();
+        console.log(str1);
+        $(str1).toggleClass('fas fa-times ChuaDiemDanh');
+        $(str1).toggleClass('fas fa-check DaDiemDanh');
+        //$('.Delete_Column .ttt3').toggleClass('fas fa-times ChuaDiemDanh');
+        //$('.Delete_Column .ttt3').toggleClass('fas fa-check DaDiemDanh');
+            chuoi += index + '&';
+            console.log(chuoi);
+            GetAllData.value = chuoi;
+    }
+</script>
 
 <script>
     const Row_Count = document.querySelectorAll('.Row_Count');
@@ -162,13 +191,14 @@
         const tds = my_row.querySelectorAll('.Delete_Column');
         for (var i = max_my_array; i > 0; i--) {
             if (array_number.indexOf(i.toString()) != -1) {
+                
                 tds[i - 1].innerHTML = `
                     <i class="fas fa-check DaDiemDanh"></i>
                 `;
             }
             else {
-                tds[i - 1].innerHTML = `
-                    <i class="fas fa-times ChuaDiemDanh"></i>
+                    tds[i - 1].innerHTML = `
+                    <i class="fas fa-times ChuaDiemDanh ttt` + (i - 1).toString() + `"></i>
                 `;
             }
 
@@ -176,7 +206,7 @@
     }
 
 
-    var test = new Date();
+    @*var test = new Date();
     var date = test.getDate();
     var month = Number(test.getMonth())+1;
     var year = test.getFullYear();
@@ -205,7 +235,7 @@
     }
     else {
         XacNhanFormBtn.setAttribute('disabled', 'disabled')
-    }
+    }*@
 
     //if (JSdate == CDate) {
     //    console.log('ngày bên C# trùng ngày bên JS')

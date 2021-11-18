@@ -70,8 +70,18 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         {
             IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayDsThoiKhoaBieuTheoMon(malopmon);
             ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoMon(malopmon);
+            List<ThoiKhoaBieu_DiemDanh> tkb = data.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == malopmon && m.LaBanCanSu == true).ToList();
+            string str = null;
+            foreach(var item in tkb)
+            {
+                if(item.NgayDuyet!=null)
+                {
+                    str = str + item.MoTa;
+                }    
+            }
             ViewBag.TKB = TKB;
             ViewBag.maLopMon = malopmon;
+            ViewBag.MoTa = str;
             return View(ds_TKB);
         }
 
@@ -79,7 +89,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         {
             List<ThoiKhoaBieu_DiemDanh> listTKB_DD = data.ThoiKhoaBieu_DiemDanh.ToList();
             LopMon lopMon = data.LopMons.Where(m => m.MaLopMon == maLopMon).FirstOrDefault();
-            ThoiKhoaBieu_DiemDanh tkb = data.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == maLopMon).FirstOrDefault();
+            List<ThoiKhoaBieu_DiemDanh> tkb = data.ThoiKhoaBieu_DiemDanh.Where(m => m.MaLopMon == maLopMon && m.LaBanCanSu == true).ToList();
                 DateTime date1 = (DateTime)lopMon.NgayBatDau;
                 DateTime date2 = (DateTime)lopMon.NgayKetThuc;
                 TimeSpan d3 = date2 - date1;
@@ -187,7 +197,17 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                     }
                 }
                 string fName;
-                if (tkb.NgayDuyet != null)
+                bool ktrNgayDuyet = false;
+                foreach(var item in tkb)
+                {
+                    if (item.NgayDuyet != null)
+                    {
+                        ktrNgayDuyet = true;
+                        break;
+                    }    
+                        
+                }
+                if (ktrNgayDuyet)
                 {
                     fName = lopMon.MaMon + "_" + lopMon.Nhom_ToThucHanh.Nhom + "_" + lopMon.Nhom_ToThucHanh.ToThucHanh.ToString() + "_" + "DaDuyet.xlsx";
                 }
@@ -244,6 +264,24 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         public ActionResult ChinhSua(int matkb)
         {
             ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuMaTKB(matkb);
+            DateTime date1 = (DateTime)TKB.LopMon.NgayBatDau;
+            DateTime date2 = (DateTime)TKB.LopMon.NgayKetThuc;
+            TimeSpan d3 = date2 - date1;
+            int KhoangThoiGian = d3.Days;
+            int SoBuoiHoc = KhoangThoiGian / 7 + 1;
+            string[] array_nBuoi = TKB.BuoiHoc.Split(',');
+            List<int> buoi = new List<int>();
+            foreach(var item in array_nBuoi)
+            {
+                buoi.Add(int.Parse(item));
+            }
+            int max = -1;
+            foreach(var item in buoi)
+            {
+                if (item >= max)
+                    max = item;
+            }
+            ViewBag.BuoiDiemDanhCuoi = max;
             ViewBag.TKB = TKB;
             ViewBag.maLopMon = TKB.MaLopMon;
             return View(TKB);
@@ -252,8 +290,45 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         [HttpPost]
         public ActionResult ChinhSua(FormCollection form)
         {
-
-            return View();
+            int matkb = int.Parse(form["matkb"]);
+            ThoiKhoaBieu_DiemDanh TKB_sv = thoikhoabieuDAO.LayThoiKhoaBieuMaTKB(matkb);
+            string chuoi = form["buoichon"];
+            string[] array_chuoi = chuoi.Split('&');
+            List<string> chuoithaydoi = new List<string>();
+            foreach(var item in array_chuoi)
+            {
+                if (TKB_sv.BuoiHoc.IndexOf(item) == -1)
+                {
+                    if(chuoithaydoi.Count() != 0)
+                    {
+                        bool ktr = false;
+                        foreach (var i in chuoithaydoi)
+                        {
+                            if (i.Equals(item))
+                            {
+                                ktr = true;
+                                chuoithaydoi.Remove(i);
+                                break;
+                            }
+                        }
+                        if(!ktr){ 
+                            chuoithaydoi.Add(item);
+                        }
+                    }
+                    else { chuoithaydoi.Add(item); }  
+                    
+                }
+            }
+            if (chuoithaydoi.Count() != 0)
+            {
+                var data_tkbsv = data.ThoiKhoaBieu_DiemDanh.Find(matkb);
+                foreach(var item in chuoithaydoi)
+                {
+                    data_tkbsv.BuoiHoc += "," + item;
+                }
+                data.SaveChanges();
+            }
+            return RedirectToAction("DanhSach", "DanhSachDiemDanh", new { malopmon = TKB_sv.MaLopMon });
         }
     }
 }

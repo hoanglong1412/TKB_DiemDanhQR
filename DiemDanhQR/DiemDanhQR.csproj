@@ -86,6 +86,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.6\lib\net47\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.6\lib\net47\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -192,6 +198,9 @@
     <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\DanhSach.cshtml" />
     <Content Include="Areas\Khoa\Views\TrangChu\DangNhap.cshtml" />
     <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\ChinhSua.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\DanhSachDiemDanh_gv.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\DanhSachSinhVien_gv.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\TaoMaQR.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LayoutSinhVien.cshtml" />
     <Content Include="Views\SinhVien\Index.cshtml" />

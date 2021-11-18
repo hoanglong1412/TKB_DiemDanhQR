@@ -119,8 +119,10 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 int ktr = 0;
                 int importSuccess = 0;
                 int importFail = 0;
-                string importFailIndex = "";
+                //string importFailIndex = "";
                 fileName = name;
+                DataTable table = new DataTable();
+                List<int> indexError = new List<int>();
                 if (fileName != null)
                 {
                     if (KiemTraCauTruc_TKB(fileName))
@@ -160,6 +162,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                         dataTable.Rows[i].Delete();
                                 }
                                 dataTable.AcceptChanges();
+                                table = dataTable;
                                 for (var i = 0; i < dataTable.Rows.Count; i++)
                                 {
                                     if (KiemtraColumEmpty_TKB(i))
@@ -171,14 +174,16 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                         else
                                         {
                                             importFail++;
-                                            importFailIndex = importFailIndex + (i + 1).ToString() + " ";
+                                            indexError.Add(i+1);
+                                            //importFailIndex = importFailIndex + (i + 1).ToString() + " ";
                                         }
                                     }
                                     else
                                     {
                                         importFail++;
-                                        importFailIndex = importFailIndex + (i + 1).ToString() + " ";
-                                    }
+                                        indexError.Add(i + 1);
+                                    //importFailIndex = importFailIndex + (i + 1).ToString() + " ";
+                                }
                                 }
                                 ktr = 1;
                                 reader.Close();
@@ -193,7 +198,8 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 }
                 ViewBag.ImportSuccess = importSuccess;
                 ViewBag.ImportFail = importFail;
-                ViewBag.ImportFailIndex = importFailIndex;
+                ViewBag.ImportFailIndex = indexError;
+                ViewData.Model = table;
                 if (ktr == 1)
                     return View("Success");
                 else
@@ -453,7 +459,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             {
                 dataGiaoVien.MaGiaoVien = dataTable.Rows[index][7].ToString();
                 dataGiaoVien.HoTen = dataTable.Rows[index][8].ToString();
-                dataGiaoVien.MatKhau = "123456";
+                dataGiaoVien.MatKhau = dataTable.Rows[index][7].ToString();
                 //dataGiaoVien.MaKhoa = 1;
             }
             catch { dataGiaoVien = null; }

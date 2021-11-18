@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <div class="col-md-10">
                         <input type="file" name="fileupload" />
-                        @ViewBag.Thongbao
+                        @*@ViewBag.Thongbao*@
 
                     </div>
                 </div>
@@ -28,6 +28,7 @@
             </div>
         }
     </div>
+    <span class="thongbao" my-data="@ViewBag.Thongbao"></span>
     @if (ViewData.Model != null)
     {
         <div class="card-body">
@@ -93,4 +94,10 @@
             jQuery('#myTable').DataTable();
         });</script>
 }
+<script>
+    var tb = document.querySelector('.thongbao').getAttribute('my-data');
+    if (tb != null)
+        confirm(tb)
+</script>
+
 

@@ -1,10 +1,121 @@
-﻿
+﻿@using System.Data
 @{
     ViewBag.Title = "Success";
     Layout = "~/Areas/Khoa/Views/Shared/_LayoutKhoa.cshtml";
 }
+@{ 
+    int dem = 1;
+    bool ktr = false;
+}
+<div class="card">
+    <div class="card-header">
+        <p>Thành công: @ViewBag.ImportSuccess dòng</p>
+        @if (ViewBag.ImportFail != 0)
+        {
+            <p>Lỗi: @ViewBag.ImportFail dòng</p>
+            <span>Dòng lỗi là: </span>
+            foreach(var item in ViewBag.ImportFailIndex)
+            {
+                <span>@item </span>
+            }
+        }
+    </div>
+    @if (ViewData.Model != null)
+    {
+        <body>
+            <div class="card-body">
+                <table id="myTable" class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nhóm</th>
+                            <th>Tổ TH</th>
+                            <th>Mã MH</th>
+                            <th>Tên môn học</th>
+                            <th>TC</th>
+                            <th>Sĩ số</th>
+                            <th>Mã GV</th>
+                            <th>GV giảng dạy</th>
+                            <th>Thứ</th>
+                            <th>Tiết bắt đầu</th>
+                            <th>Số tiết</th>
+                            <th>Phòng</th>
+                            <th>Tên Lớp</th>
+                            <th>Ngày học</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in ViewData.Model.Rows)
+                        {
+                            foreach (var item in ViewBag.ImportFailIndex)
+                            {
+                                if (dem == item)
+                                {
+                                    ktr = true;
+                                    dem++;
+                                    break;
+                                }
+                            }
+                            if (!ktr)
+                            {
+                                <tr>
+                                    <td>@row[0]</td>
+                                    <td>@row[1]</td>
+                                    <td>@row[2]</td>
+                                    <td>@row[3]</td>
+                                    <td>@row[4]</td>
+                                    <td>@row[5]</td>
+                                    <td>@row[6]</td>
+                                    <td>@row[7]</td>
+                                    <td>@row[8]</td>
+                                    <td>@row[9]</td>
+                                    <td>@row[10]</td>
+                                    <td>@row[11]</td>
+                                    <td>@row[12]</td>
+                                    <td>@row[13]</td>
+                                    <td>@row[14]</td>
+                                </tr>
+                                dem++;
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td style="color:red">@row[0]</td>
+                                    <td style="color:red">@row[1]</td>
+                                    <td style="color:red">@row[2]</td>
+                                    <td style="color:red">@row[3]</td>
+                                    <td style="color:red">@row[4]</td>
+                                    <td style="color:red">@row[5]</td>
+                                    <td style="color:red">@row[6]</td>
+                                    <td style="color:red">@row[7]</td>
+                                    <td style="color:red">@row[8]</td>
+                                    <td style="color:red">@row[9]</td>
+                                    <td style="color:red">@row[10]</td>
+                                    <td style="color:red">@row[11]</td>
+                                    <td style="color:red">@row[12]</td>
+                                    <td style="color:red">@row[13]</td>
+                                    <td style="color:red">@row[14]</td>
+                                </tr>
+                                ktr = false;
+                            }
 
-<p>Thành công: @ViewBag.ImportSuccess dòng</p>
-<p>Lỗi: @ViewBag.ImportFail dòng</p>
-<p>Dòng lỗi là: @ViewBag.ImportFailIndex</p>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </body>
+    }
+</div>
+
+@section head{
+
+    <link href="~/Assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+@section footer{
+    <script src="~/Assets/js/jquery.dataTables.min.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('#myTable').DataTable();
+        });</script>
+}
 
