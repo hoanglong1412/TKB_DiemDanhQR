@@ -1,0 +1,274 @@
+﻿@using DiemDanhQR.Models;
+@using DiemDanhQR.DAO;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    ViewBag.Title = "DanhSachDiemDanh";
+    Layout = "~/Areas/GiangVien/Views/Shared/_LayoutGiangVien.cshtml";
+}
+@{
+    int count = 0;
+    DateTime date1 = ViewBag.TKB.LopMon.NgayBatDau;
+    DateTime date2 = ViewBag.TKB.LopMon.NgayKetThuc;
+    TimeSpan d3 = date2 - date1;
+    int KhoangThoiGian = d3.Days;
+    int SoBuoiHoc = KhoangThoiGian / 7 + 1;
+    int ThuCuaNgayDau = 0;
+    DateTime NgayDauHoc = DateTime.Now;
+    int Thu = ViewBag.TKB.LopMon.BuoiHoc.MaThu;
+    int TietBD = ViewBag.TKB.LopMon.BuoiHoc.TietBatDau;
+    int GioKT = 0;
+    int GioBD = 0;
+
+    string CDate = date2.ToString("dd");
+    string CMonth = date2.ToString("MM");
+    string CYear = date2.ToString("yyyy");
+
+    string ngayThang = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString();
+    int dungNgay = 0;
+
+    switch (TietBD)
+    {
+        case 2: GioKT = 11; GioBD =6 ;break;
+        case 7: GioKT = 17; GioBD =12 ;break;
+        case 15: GioKT = 22; GioBD =18 ;break;
+    }
+
+    switch (date1.DayOfWeek.ToString())
+    {
+        case "Monday":
+            ThuCuaNgayDau = 2;
+            break;
+
+        case "Tuesday":
+            ThuCuaNgayDau = 3;
+            break;
+
+        case "Wednesday":
+            ThuCuaNgayDau = 4;
+            break;
+
+        case "Thursday":
+            ThuCuaNgayDau = 5;
+            break;
+
+        case "Friday":
+            ThuCuaNgayDau = 6;
+            break;
+
+        case "Saturday":
+            ThuCuaNgayDau = 7;
+            break;
+
+        case "Sunday":
+            ThuCuaNgayDau = 8;
+            break;
+    }
+
+    if (ThuCuaNgayDau - Thu == 0)
+    {
+        NgayDauHoc = date1;
+    }
+    else if (ThuCuaNgayDau - Thu == 1 || ThuCuaNgayDau - Thu == -6)
+    {
+        NgayDauHoc = date1.AddDays(6);
+    }
+    else if (ThuCuaNgayDau - Thu == 2 || ThuCuaNgayDau - Thu == -5)
+    {
+        NgayDauHoc = date1.AddDays(5);
+    }
+    else if (ThuCuaNgayDau - Thu == 3 || ThuCuaNgayDau - Thu == -4)
+    {
+        NgayDauHoc = date1.AddDays(4);
+    }
+    else if (ThuCuaNgayDau - Thu == 4 || ThuCuaNgayDau - Thu == -3)
+    {
+        NgayDauHoc = date1.AddDays(3);
+    }
+    else if (ThuCuaNgayDau - Thu == 5 || ThuCuaNgayDau - Thu == -2)
+    {
+        NgayDauHoc = date1.AddDays(2);
+    }
+    else if (ThuCuaNgayDau - Thu == 6 || ThuCuaNgayDau - Thu == -1)
+    {
+        NgayDauHoc = date1.AddDays(1);
+    }
+}
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+
+    .buttonQR {
+        font: 20px Arial;
+        text-decoration: none;
+        background-color: #17D7A0;
+        color: #ffffff;
+        width: 100px;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        padding: 8px 6px 2px 6px;
+        text-align: center;
+        margin: 10px 8px 20px 8px;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+        background-color: #808080;
+        color: #ffffff;
+    }
+</style>
+<script src="~/Assets/js/jquery-3.4.1.min.js"></script>
+<div style="display:flex;justify-content:space-between">
+    <h2>Bảng điểm danh</h2>
+    <a id="btnQR" class="buttonQR"  href="@Url.Action("TaoMaQR","GiangVien",new{  id = ViewBag.TKB.LopMon.MaLopMon })">QR</a>
+</div>
+
+@*<a href="@Url.Action("XacNhanDanhSachDiemDanh","SinhVien" , new { MaLopMon = ViewBag.TKB.LopMon.MaLopMon})" class="">Xacs nhajn</a>*@
+<table>
+    <tr>
+
+        <th>MSSV</th>
+        <th>Họ Tên</th>
+
+        @for (int i = 1; i <= SoBuoiHoc; i++)
+        {
+            @*<th>@date1.AddDays(7 * i - 7).ToString("dd/MM")</th>*@
+            <th>@NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM")</th>
+            if (NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM").Equals(ngayThang))
+            {
+                if (DateTime.Now.Hour <= GioKT && DateTime.Now.Hour >= GioBD)
+                {
+                    dungNgay = 1;
+                }
+            };
+
+            //Test Ngay gio hien nut QR
+            //Test ngay 8/11 luc 8h00 AM
+            //if (NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM").Equals("08/11"))
+            //{
+            //    if (8 <= GioKT && 8 >= GioBD)
+            //    {
+            //        dungNgay = 1;
+            //    }
+            //};
+        }
+
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr class="Row_Count">
+            <td>@item.MSSV</td>
+            <td>@item.SinhVien.HoTen</td>
+
+            @for (int i = 1; i <= SoBuoiHoc; i++)
+            {
+                <td class="Delete_Column">
+                    <span class="array_number" my-data="@item.BuoiHoc"></span>
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    const Row_Count = document.querySelectorAll('.Row_Count');
+    var my_array = [];
+
+    // lấy số lớn nhất ở các hàng
+    Row_Count.forEach(row => {
+        var array_number = row.querySelector('.Delete_Column .array_number').getAttribute('my-data') != null ? row.querySelector('.Delete_Column .array_number').getAttribute('my-data').split(',') : [0];
+        var max_number = (Math.max.apply(Math, array_number));
+        my_array.push(max_number);
+    })
+
+    var max_my_array = Math.max.apply(Math, my_array)
+
+    // lặp từ số lớn nhất xuống, nếu mảng nào chứa buổi điểm danh nào thì hiện
+    for (var j = 0; j < Row_Count.length; j++) {
+        var my_row = Row_Count[j];
+        //var text_number = my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data');
+        var array_number = my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data') != null ? my_row.querySelector('.Delete_Column .array_number').getAttribute('my-data').split(',') : [0];
+
+        const tds = my_row.querySelectorAll('.Delete_Column');
+        for (var i = max_my_array; i > 0; i--) {
+            if (array_number.indexOf(i.toString()) != -1) {
+                tds[i - 1].innerHTML = `
+                    <i class="fas fa-check DaDiemDanh"></i>
+                `;
+            }
+            else {
+                tds[i - 1].innerHTML = `
+                    <i class="fas fa-times ChuaDiemDanh"></i>
+                `;
+            }
+
+        }
+
+    }
+    $(document).ready(function () {
+        if (@dungNgay== 1) {
+            var elementQr = document.getElementById('btnQR');
+            elementQr.classList.remove('disabled');
+        }
+        else {
+            var elementQr = document.getElementById('btnQR');
+            elementQr.classList.add('disabled');
+        }
+    });
+
+    var test = new Date();
+    var date = test.getDate();
+    var month = Number(test.getMonth())+1;
+    var year = test.getFullYear();
+    var JSdate = (month + "/" + date  + "/" + year).toString()
+
+
+
+    XacNhanFormInput.value = JSdate;
+
+    let distanceDay = date - @CDate
+    if (date == @CDate && @CMonth == month && @CYear == year || date - @CDate == 1 && @CMonth == month && @CYear == year ||
+        date - @CDate == 2 && @CMonth == month && @CYear == year || date - @CDate == 3 && @CMonth == month && @CYear == year ||
+        date - @CDate == 4 && @CMonth == month && @CYear == year || date - @CDate == 5 && @CMonth == month && @CYear == year ||
+        date - @CDate == 6 && @CMonth == month && @CYear == year ||
+        date - @CDate == -24 && @CMonth == month - 1 && @CYear == year || date - @CDate == -25 && @CMonth == month - 1 && @CYear == year ||
+        date - @CDate == -26 && @CMonth == month - 1 && @CYear == year || date - @CDate == -27 && @CMonth == month - 1 && @CYear == year ||
+        date - @CDate == -28 && @CMonth == month - 1 && @CYear == year || date - @CDate == -29 && @CMonth == month - 1 && @CYear == year ||
+        date - @CDate == -30 && @CMonth == month - 1 && @CYear == year ||
+        date - @CDate == -24 && @CMonth == 12 && @CYear == year - 1 || date - @CDate == -25 && @CMonth == 12 && @CYear == year - 1 ||
+        date - @CDate == -26 && @CMonth == 12 && @CYear == year - 1 || date - @CDate == -27 && @CMonth == 12 && @CYear == year - 1 ||
+        date - @CDate == -28 && @CMonth == 12 && @CYear == year - 1 || date - @CDate == -29 && @CMonth == 12 && @CYear == year - 1 ||
+        date - @CDate == -30 && @CMonth == 12 && @CYear == year - 1) {
+        console.log('ok')
+    }
+    else {
+    }
+
+    //if (JSdate == CDate) {
+    //    console.log('ngày bên C# trùng ngày bên JS')
+    //} else {
+    //    console.log('ngày bên C# không trùng ngày bên JS')
+    //    XacNhanForm.setAttribute('disabled', 'disabled')
+
+    //}
+</script>

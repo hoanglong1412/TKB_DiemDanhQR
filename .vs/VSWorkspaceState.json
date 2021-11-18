@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\DiemDanhQR",
+    "\\DiemDanhQR\\Areas",
+    "\\DiemDanhQR\\Areas\\GiangVien",
+    "\\DiemDanhQR\\Areas\\GiangVien\\Controllers",
+    "\\DiemDanhQR\\Areas\\GiangVien\\Views",
+    "\\DiemDanhQR\\Views",
+    "\\DiemDanhQR\\Views\\SinhVien"
+  ],
+  "SelectedNode": "\\DiemDanhQR\\Areas\\GiangVien\\Controllers\\GiangVienController.cs",
+  "PreviewInSolutionExplorer": false
+}

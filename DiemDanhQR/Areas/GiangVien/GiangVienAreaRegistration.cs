@@ -16,33 +16,48 @@ namespace DiemDanhQR.Areas.GiangVien
         {
             context.MapRoute(
              name: "GiangVien_lichGiangDayTheoTuan",
-             url: "gv/Lich-Giang-Day-Theo-Tuan",
+             url: "GiangVien/Lich-Giang-Day-Theo-Tuan",
              defaults: new { controller = "GiangVien", action = "LichGiangDayTheoTuan", AreaName = "GiangVien" }
             );
             context.MapRoute(
              name: "GiangVien_lichGiangDay",
-             url: "gv/Lich-Giang-Day",
+             url: "GiangVien/Lich-Giang-Day",
              defaults: new { controller = "GiangVien", action = "LichGiangDay", AreaName = "GiangVien" }
             );
             context.MapRoute(
+             name: "GiangVien_GenerateQR",
+             url: "GiangVien/GiangVien/Generate",
+             defaults: new { controller = "GiangVien", action = "Generate", AreaName = "GiangVien" }
+            );
+            context.MapRoute(
+             name: "GiangVien_TaoMaQR",
+             url: "GiangVien/GiangVien/TaoMaQR",
+             defaults: new { controller = "GiangVien", action = "TaoMaQR", AreaName = "GiangVien" }
+            );
+            context.MapRoute(
+             name: "GiangVien_DSDiemDanh",
+             url: "GiangVien/GiangVien/DanhSachDiemDanh_gv/{id}",
+             defaults: new { controller = "GiangVien", action = "DanhSachDiemDanh_gv", AreaName = "GiangVien", id = UrlParameter.Optional }
+            );
+            context.MapRoute(
+             name: "GiangVien_DSSinhVien",
+             url: "GiangVien/GiangVien/DanhSachSinhVien_gv/{id}",
+             defaults: new { controller = "GiangVien", action = "DanhSachSinhVien_gv", AreaName = "GiangVien", id = UrlParameter.Optional }
+            );
+            context.MapRoute(
              name: "GiangVien_index",
-             url: "gv/Trang-Chu",
+             url: "GiangVien/Trang-Chu",
              defaults: new { controller = "GiangVien", action = "Index_gv", AreaName = "GiangVien" }
             );
             context.MapRoute(
              name: "GiangVien_dangNhap",
-             url: "gv/Dang-Nhap",
+             url: "GiangVien/Dang-Nhap",
              defaults: new { controller = "GiangVien", action = "DangNhap_gv", AreaName = "GiangVien" }
             );
             context.MapRoute(
                 name:"GiangVien_default",
-                url:"gv/{controller}/{action}/{id}",
+                url:"GiangVien/{controller}/{action}/{id}",
                 defaults: new { controller="GiangVien",action = "Index_gv", AreaName="GiangVien", id = UrlParameter.Optional }
-            );
-            context.MapRoute(
-                name: "GiangVien_default2",
-                url: "GiangVien/{controller}/{action}/{id}",
-                defaults: new { controller = "GiangVien", action = "Index_gv", AreaName = "GiangVien", id = UrlParameter.Optional }
             );
         }
     }
