@@ -123,9 +123,12 @@
     <Content Include="Assets\img\loginbg.png" />
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\logo1.png" />
+    <Content Include="Assets\img\qr-code.png" />
     <Content Include="Assets\img\sunny.png" />
     <Content Include="Assets\img\usericon.png" />
     <Content Include="Assets\js\bootstrap.js" />
+    <Content Include="Assets\js\html5-qrcode.min.js" />
+    <Content Include="Assets\js\html5-qrcode-file.min.js" />
     <Content Include="Assets\js\jquery-3.4.1.min.js" />
     <Content Include="Assets\css\jquery.dataTables.min.css" />
     <Content Include="Assets\js\jquery.dataTables.min.js" />
@@ -183,6 +186,8 @@
     <Content Include="Areas\Khoa\Views\ThemDanhSachSinhVien\Index.cshtml" />
     <Content Include="Areas\Khoa\Views\ThemDanhSachSinhVien\Success.cshtml" />
     <Content Include="Areas\GiangVien\Views\GiangVien\TaoMaQR.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\DanhSachDiemDanh_gv.cshtml" />
+    <Content Include="Areas\GiangVien\Views\GiangVien\DanhSachSinhVien_gv.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LayoutSinhVien.cshtml" />
     <Content Include="Views\SinhVien\Index.cshtml" />
@@ -191,6 +196,8 @@
     <Content Include="Views\SinhVien\ThoiKhoaBieuTheoTuan.cshtml" />
     <Content Include="Views\SinhVien\DanhSachDiemDanh.cshtml" />
     <Content Include="Views\SinhVien\DanhSachLop.cshtml" />
+    <Content Include="Views\SinhVien\QuetMaQr.cshtml" />
+    <Content Include="Views\SinhVien\NhanMaQr.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -63,7 +63,8 @@
         @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
         @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
     </td>
-    <td><a class="btn-changeweek" href="@Url.Action("TaoMaQR","GiangVien",new{  id = item.MaLopMon })">zo ne</a></td>
+    <td><a class="btn-changeweek" href="@Url.Action("DanhSachSinhVien_gv","GiangVien",new{  malopmon = item.MaLopMon })">Sinh viên</a></td>
+    <td><a class="btn-changeweek" href="@Url.Action("DanhSachDiemDanh_gv","GiangVien",new{  malopmon = item.MaLopMon })">Điểm danh</a></td>
 </tr>
     }
 

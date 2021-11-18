@@ -1,0 +1,108 @@
+﻿
+
+@using DiemDanhQR.Models;
+@using DiemDanhQR.DAO;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    ViewBag.Title = "DanhSachSinhVien_gv";
+    Layout = "~/Areas/GiangVien/Views/Shared/_LayoutGiangVien.cshtml";
+}
+
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+</style>
+<script src="~/Assets/js/jquery-3.4.1.min.js"></script>
+<div style="display:flex;justify-content:space-between">
+    <h2>Bảng sinh viên: @ViewBag.TKB.LopMon.MonHoc.MaMon - @ViewBag.TKB.LopMon.BuoiHoc.Thu.TenThu - @ViewBag.TKB.LopMon.TenLopMon</h2>
+</div>
+<form action="/GiangVien/GiangVien/ChonBanCanSu" method="post">
+
+    <table>
+        <div style="color:orangered;margin-bottom:6px">*Là ban cán sự lớp.</div>
+        <tr>
+            <th>MSSV</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>SDT</th>
+            <th>Ngày sinh</th>
+            <th>Lớp</th>
+            <th>Cán sự</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MSSV </td>
+                <td>@item.SinhVien.HoTen </td>
+                <td>@item.SinhVien.Email</td>
+                <td>@item.SinhVien.SDT</td>
+                <td>@item.SinhVien.NgaySinh.ToString("dd/MM/yyyy")</td>
+                @if (item.SinhVien.LaBanCanSu)
+                {
+                    <td style="color:orangered">@item.SinhVien.MaLop</td>
+                }
+                else
+                {
+                    <td>@item.SinhVien.MaLop</td>
+                }
+                @if (item.LaBanCanSu != null && item.LaBanCanSu == true)
+                {
+                    <td>
+                        <input class="bcs" data-id="@item.MSSV" id="labancansu" name="BanCanSu" checked type="checkbox" />
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <input class="bcs" data-id="@item.MSSV" id="labancansu" name="BanCanSu" type="checkbox" />
+                    </td>
+                }
+            </tr>
+        }
+        <input hidden name="malopmon" value="@ViewBag.TKB.MaLopMon" />
+        <input hidden name="nguoiduocchon" class="getAllData" />
+
+    </table>
+    <button style="margin:10px 0 0 95%;font-size:1.3em;padding:8px 12px;" type="submit">Lưu</button>
+
+</form>
+
+<script>
+    const GetAllData = document.querySelector('.getAllData');
+    const chonbcs = document.querySelectorAll('.bcs');
+    var chuoi = "";
+
+    chonbcs.forEach(bcs => {
+        bcs.onclick = e => {
+            var MSSV = e.target.getAttribute('data-id')
+            trangthai = e.target.checked.toString() == 'true' ? 1 : 0;
+            chuoi += MSSV + '_' + trangthai + '&'
+            console.log(chuoi)
+            GetAllData.value = chuoi;
+        }
+    });
+
+    function ChonCanSu(mssv) {
+        console.log(this.value);
+        //chuoi += mssv+"-";
+        //console.log("BCS:" + chuoi);
+    }
+</script>
+

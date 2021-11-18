@@ -9,6 +9,7 @@ using System.IO;
 using ZXing;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Data.Entity;
 
 namespace DiemDanhQR.Areas.GiangVien.Controllers
 {
@@ -16,7 +17,8 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
     {
         MyDBContext db = new MyDBContext();
         LichGiangDayDAO lichgiangdayDAO = new LichGiangDayDAO();
-        
+        ThoiKhoaBieuDAO thoikhoabieuDAO = new ThoiKhoaBieuDAO();
+
         // GET: GiangVien/GiangVien
         public ActionResult Index_gv()
         {
@@ -122,7 +124,16 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
                 dsLGD.Add(dsTKB);
             }
             ViewBag.date = date;
-            return View(dsLGD);
+            return View(dsLGD.OrderBy(m => m.LopMon.BuoiHoc.MaThu).ThenBy(m => m.LopMon.BuoiHoc.TietBatDau));
+
+        }
+        public ActionResult DanhSachDiemDanh_gv(int malopmon)
+        {
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayDsThoiKhoaBieuTheoMon(malopmon);
+            ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoMon(malopmon);
+            ViewBag.TKB = TKB;
+
+            return View(ds_TKB);
         }
         //---------- Hien Lich Giang Day Theo Tuan ---------- End
         //---------- QR CODER ----------Start
@@ -134,8 +145,32 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
                 return RedirectToAction("DangNhap_gv", "GiangVien");
             }
             LopMon lopmon = db.LopMons.Find(id);
+            BuoiHoc buoihoc = db.BuoiHocs.Find(lopmon.MaBuoi);
+            DateTime ngayKT = lopmon.NgayKetThuc.Value.AddDays(7);
+            DateTime ngayBD = lopmon.NgayBatDau.Value;
+            DateTime ngayDauTuan = ngayBD;
+            DateTime NgayHienTai = DateTime.Now;
+            int buoi = -1;
+
+            //Neu thoi gian hien tai con trong thoi gian hoc
+            if (DateTime.Now.Date <= ngayKT && DateTime.Now.Date > ngayBD)
+            {
+                buoi = -2;
+                //tinh theo tuan
+                for(int i = 0; i <= (int)(ngayKT.Subtract(ngayBD).TotalDays / 7); i++)
+                {
+                    if (DateTime.Compare(DateTime.Now.Date, ngayDauTuan.AddDays(7 * i)) >= 0 &&
+                        DateTime.Compare(DateTime.Now.Date, ngayDauTuan.AddDays(7 * i + 6)) < 0)
+                    {
+                        buoi = i+1;
+                    }
+                }
+            }
             QR qrcode = new QR();
-            qrcode.MaQR = giangVien.MaGiaoVien+DateTime.Now+lopmon.MaLopMon;
+            qrcode.MaQR = giangVien.MaGiaoVien + "$" + NgayHienTai + "$" + lopmon.MaLopMon + "$" + buoi;
+            db.QRs.Add(qrcode);
+            db.SaveChanges();
+            ViewBag.LopMon = lopmon;
             return View(qrcode);
         }
         [HttpPost]
@@ -150,13 +185,14 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             {
                 //catch exception if there is any
             }
+            
             return View("TaoMaQR", qrcode);
         }
 
         private string GenerateQRCode(string qrcodeText)
         {
-            string folderPath = "~/GiangVien/Data/img/";
-            string imagePath = "~/GiangVien/Data/img/QrCode.jpg";
+            string folderPath = "~/Areas/GiangVien/Data/img/";
+            string imagePath = "~/Areas/GiangVien/Data/img/QrCode.jpg";
             // If the directory doesn't exist then create it.
             if (!Directory.Exists(Server.MapPath(folderPath)))
             {
@@ -181,5 +217,49 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             return imagePath;
         }
         //---------- QR CODER ----------End
+        //---------- Danh Sách Sinh Viên ----- Start
+        public ActionResult DanhSachSinhVien_gv(int malopmon)
+        {
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayDsThoiKhoaBieuTheoMon(malopmon);
+            ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoMon(malopmon);
+            ViewBag.TKB = TKB;
+          
+
+            return View(ds_TKB);
+        }
+        [HttpPost]
+        public ActionResult ChonBanCanSu(FormCollection form)
+        {
+            ThoiKhoaBieu_DiemDanh tkb = new ThoiKhoaBieu_DiemDanh();
+            string malopmon = form["malopmon"];
+            string dsnguoiduocchon = form["nguoiduocchon"];
+            string[] nguoiduocchon = dsnguoiduocchon.Split('&');
+            foreach (var item in nguoiduocchon)
+            {
+                if(item.Contains("_") == true)
+                {
+                    string[] chuoi = item.Split('_');
+                    string mssv = chuoi[0];
+                    string trangthai = chuoi[1];
+                    if (trangthai == "1")
+                    {
+                        tkb = db.ThoiKhoaBieu_DiemDanh.FirstOrDefault(m => m.MSSV == mssv && m.MaLopMon.ToString().Equals(malopmon));
+                        tkb.LaBanCanSu = true;
+                        db.Entry(tkb).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        tkb = db.ThoiKhoaBieu_DiemDanh.FirstOrDefault(m => m.MSSV == mssv && m.MaLopMon.ToString().Equals(malopmon));
+                        tkb.LaBanCanSu = false;
+                        db.Entry(tkb).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+            }
+
+            return RedirectToAction("DanhSachSinhVien_gv", "GiangVien",new { malopmon=malopmon});
+        }
+        //---------- Danh Sách Sinh Viên ----- End
     }
 }

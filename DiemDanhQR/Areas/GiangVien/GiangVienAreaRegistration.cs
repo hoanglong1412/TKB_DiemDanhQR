@@ -35,6 +35,16 @@ namespace DiemDanhQR.Areas.GiangVien
              defaults: new { controller = "GiangVien", action = "TaoMaQR", AreaName = "GiangVien" }
             );
             context.MapRoute(
+             name: "GiangVien_DSDiemDanh",
+             url: "GiangVien/GiangVien/DanhSachDiemDanh_gv/{id}",
+             defaults: new { controller = "GiangVien", action = "DanhSachDiemDanh_gv", AreaName = "GiangVien", id = UrlParameter.Optional }
+            );
+            context.MapRoute(
+             name: "GiangVien_DSSinhVien",
+             url: "GiangVien/GiangVien/DanhSachSinhVien_gv/{id}",
+             defaults: new { controller = "GiangVien", action = "DanhSachSinhVien_gv", AreaName = "GiangVien", id = UrlParameter.Optional }
+            );
+            context.MapRoute(
              name: "GiangVien_index",
              url: "GiangVien/Trang-Chu",
              defaults: new { controller = "GiangVien", action = "Index_gv", AreaName = "GiangVien" }

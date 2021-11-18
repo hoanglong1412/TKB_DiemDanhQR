@@ -12,6 +12,6 @@ namespace DiemDanhQR.Models
         [Key]
         [StringLength(200)]
         public string MaQR { get; set; }
-        public string DuongDanQR { get; set; }
+        public string DuongDanQR;
     }
 }

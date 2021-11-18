@@ -14,35 +14,38 @@
     @Html.AntiForgeryToken()
     <script>document.getElementById('qrCode').setAttribute('visibility', 'hidden');</script>
     <div class="form-horizontal" style="margin-left:30%;justify-content:center">
-        <h2>Generate QRCode</h2>
+        <h2>Xác nhận tạo mã QR</h2>
 
         <span style="color:red; ">@ViewBag.Message </span>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaQR, new { @class = "form-control", @id = "qrCode" })
+        @if (ViewBag.LopMon != null) {
+            <div>
+                Mã lớp:    @ViewBag.LopMon.TenLopMon <br />
+                Tên môn:    @ViewBag.LopMon.MonHoc.TenMon <br />
+                Thứ:    @ViewBag.LopMon.BuoiHoc.Thu.TenThu <br />
+                Ngày:    @DateTime.Now.ToString("dd/MM/yyyy")
             </div>
-        </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Xác nhận" class="btn btn-default" />
+                </div>
+            </div>
+        }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DuongDanQR, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @if (Model != null && !String.IsNullOrEmpty(Model.DuongDanQR))
                 {
                     <img style="width:30%;height:30%" src="@Url.Content(Model.DuongDanQR)" alt="Image" />
                 }
-
             </div>
         </div>
-
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Generate QR" class="btn btn-default" />
+            <div class="col-md-10" style="visibility:hidden">
+                @Html.EditorFor(model => model.MaQR, new { @class = "form-control", @id = "qrCode" })
             </div>
         </div>
-        <div>
-            @Html.ActionLink("Read QR Code", "Read")
-        </div>
+        
     </div>
     
 }

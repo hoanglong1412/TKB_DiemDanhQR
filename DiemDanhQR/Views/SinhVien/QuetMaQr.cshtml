@@ -1,0 +1,40 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
+}
+<script src="~/Assets/js/html5-qrcode-file.min.js"></script>
+<style>
+    .result {
+        background-color: green;
+        color: #fff;
+        padding: 20px;
+    }
+
+    .row {
+        display: flex;
+    }
+</style>
+
+<div class="row">
+    <div class="col">
+        <div style="width:500px;" id="reader"></div>
+    </div>
+</div>
+<form action="/SinhVien/NhanMaQr" method="post">
+    <input style="visibility:hidden" type="text" id="result1" name="MaQR" value="" />
+    <input disabled style="margin-top:24px" id="btnsubmit" type="submit" value="Điểm danh"/>
+</form>
+<script type="text/javascript">
+    function onScanSuccess(qrCodeMessage) {
+        document.getElementById('result1').setAttribute('value', qrCodeMessage);
+        document.getElementById('btnsubmit').removeAttribute('disabled');
+    }
+    function onScanError(errorMessage) {
+        //handle scan error
+    }
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+</script>
+
