@@ -142,10 +142,16 @@ namespace DiemDanhQR.Controllers
         public ActionResult XacNhanDanhSachDiemDanh(FormCollection form)
         {
             string txtMaLopMon = form.Get("MaLopMon");
+            string MoTa = form.Get("MoTa");
             int MaLopMon = int.Parse(txtMaLopMon) > 0 ? int.Parse(txtMaLopMon) : 0;
-            thoikhoabieuDAO.CapNhatXacNhanDiemDanh(MaLopMon, "1811063022", DateTime.Now);
+            thoikhoabieuDAO.CapNhatXacNhanDiemDanh(MaLopMon, MoTa, "1811063022", DateTime.Now);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("XacNhanDiemDanhThanhCong");
+        }
+
+        public ActionResult XacNhanDiemDanhThanhCong()
+        {
+            return View();
         }
     }
 }

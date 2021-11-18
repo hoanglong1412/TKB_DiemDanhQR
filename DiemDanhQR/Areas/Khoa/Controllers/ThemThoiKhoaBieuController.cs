@@ -8,7 +8,8 @@ using ExcelDataReader;
 using System.Data;
 using System.Globalization;
 using System.IO;
-
+using OfficeOpenXml;
+using OfficeOpenXml.Table;
 
 namespace DiemDanhQR.Areas.Khoa.Controllers
 {
@@ -16,9 +17,15 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
     {
         MyDBContext data = new MyDBContext();
         DataSet dataSet;
+        private string fileName;
         [System.Web.Mvc.HttpGet]
         public System.Web.Mvc.ActionResult Index()
         {
+            TaiKhoanKhoa khoa = (TaiKhoanKhoa)Session["taiKhoanKhoa"];
+            if (khoa == null)
+            {
+                return RedirectToAction("DangNhap", "TrangChu");
+            }
             return View();
         }
 
@@ -27,10 +34,13 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         public System.Web.Mvc.ActionResult Index(HttpPostedFileBase fileupload)
         {
             //var fileName = Path.GetFileName(fileupload.FileName);
-            var fileName = "test.xlsx";
+
             if (fileupload != null && fileupload.ContentLength > 0)
             {
+                bool ktrFail = false;
+                var time = DateTime.Now.ToString("dd_MM_yyyy");
                 string ext = Path.GetExtension(fileupload.FileName);
+                fileName = time + "_" + fileupload.FileName;
                 if (ext.Equals(".xlsx"))
                 {
                     var path = Path.Combine(Server.MapPath(@"~/Assets/excel"), fileName);
@@ -44,85 +54,43 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 }
                 else
                 {
+                    ktrFail = true;
                     ViewBag.Thongbao = "Không phải file excel";
                 }
-                var fileName2 = Server.MapPath(@"~/Assets/excel/test.xlsx");
-                using (var stream = System.IO.File.Open(fileName2, FileMode.Open, FileAccess.Read))
+                if (!ktrFail)
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    if (KiemTraCauTruc_TKB(fileName))
                     {
-
-                        dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
+                        string strUrl = "~/Assets/excel/" + fileName;
+                        var fileNameInProject = Server.MapPath(strUrl);
+                        using (var stream = System.IO.File.Open(fileNameInProject, FileMode.Open, FileAccess.Read))
                         {
-                            ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration
+                            using (var reader = ExcelReaderFactory.CreateReader(stream))
                             {
-                                UseHeaderRow = true,
-                                ReadHeaderRow = rowReader =>
+
+                                dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
                                 {
-                                    for (var i = 1; i < rowReader.RowCount; i++)
+                                    ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration
                                     {
-                                        if (!rowReader.IsDBNull(0))
+                                        UseHeaderRow = true,
+                                        ReadHeaderRow = rowReader =>
                                         {
-                                            string str = rowReader.GetValue(0).ToString();
-                                            if (str.Equals("STT"))
-                                                break;
-                                        }
-                                        rowReader.Read();
+                                            for (var i = 1; i < rowReader.RowCount; i++)
+                                            {
+                                                if (!rowReader.IsDBNull(0))
+                                                {
+                                                    string str = rowReader.GetValue(0).ToString();
+                                                    if (str.Equals("STT"))
+                                                        break;
+                                                }
+                                                rowReader.Read();
+                                            }
+                                        },
                                     }
-                                },
+                                });
+                                reader.Close();
                             }
-                        });
-                        reader.Close();
-                    }
-                }
-                var dataTable = dataSet.Tables[0];
-                for (var i = 0; i < dataTable.Rows.Count; i++)
-                {
-                    if (dataTable.Rows[i][0].ToString().Length == 0)
-                        dataTable.Rows[i].Delete();
-                }
-                dataTable.AcceptChanges();
-                ViewData.Model = dataTable;
-                System.IO.File.Delete(fileName);
-            }
-
-            return View();
-        }
-
-        public System.Web.Mvc.ActionResult ThemTKB()
-        {
-            int ktr = 0;
-            int importSuccess = 0;
-            int importFail = 0;
-            string importFailIndex = "";
-            if (KiemTraCauTruc_TKB())
-            {
-                var fileName = Server.MapPath(@"~/Assets/excel/test.xlsx");
-                using (var stream = System.IO.File.Open(fileName, FileMode.Open, FileAccess.Read))
-                {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
-                    {
-
-                        dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
-                        {
-                            ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration
-                            {
-                                UseHeaderRow = true,
-                                ReadHeaderRow = rowReader =>
-                                {
-                                    for (var i = 1; i < rowReader.RowCount; i++)
-                                    {
-                                        if (!rowReader.IsDBNull(0))
-                                        {
-                                            string str = rowReader.GetValue(0).ToString();
-                                            if (str.Equals("STT"))
-                                                break;
-                                        }
-                                        rowReader.Read();
-                                    }
-                                },
-                            }
-                        });
+                        }
                         var dataTable = dataSet.Tables[0];
                         for (var i = 0; i < dataTable.Rows.Count; i++)
                         {
@@ -130,49 +98,119 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                 dataTable.Rows[i].Delete();
                         }
                         dataTable.AcceptChanges();
-                        for (var i = 0; i < dataTable.Rows.Count; i++)
-                        {
-                            if (KiemtraColumEmpty_TKB(i))
-                            {
-                                if (ThemDuLieuVaoSQL_TKB(i))
-                                {
-                                    importSuccess++;
-                                }
-                                else
-                                {
-                                    importFail++;
-                                    importFailIndex = importFailIndex + (i + 1).ToString() + " ";
-                                }
-                            }
-                            else
-                            {
-                                importFail++;
-                                importFailIndex = importFailIndex + (i + 1).ToString() + " ";
-                            }
-                        }
-                        ktr = 1;
-                        reader.Close();
+                        ViewData.Model = dataTable;
+                        ViewBag.FileName = fileName;
+                        //System.IO.File.Delete(fileName);
+                    }
+                    else
+                    {
+                        string strUrl = "~/Assets/excel/" + fileName;
+                        var fileNameInProject = Server.MapPath(strUrl);
+                        ViewBag.Thongbao = "Không đúng cấu trúc file excel thêm thời khóa biểu";
+                        System.IO.File.Delete(fileNameInProject);
                     }
                 }
-                System.IO.File.Delete(fileName);
             }
-            ViewBag.ImportSuccess = importSuccess;
-            ViewBag.ImportFail = importFail;
-            ViewBag.ImportFailIndex = importFailIndex;
-            if (ktr == 1)
-                return View("Success");
-            else
-                return View("Success");
+            return View();
         }
 
-        public bool KiemTraCauTruc_TKB()
+        public System.Web.Mvc.ActionResult ThemTKB(string name)
+        {
+                int ktr = 0;
+                int importSuccess = 0;
+                int importFail = 0;
+                string importFailIndex = "";
+                fileName = name;
+                if (fileName != null)
+                {
+                    if (KiemTraCauTruc_TKB(fileName))
+                    {
+                        //var fileName = Server.MapPath(@"~/Assets/excel/test.xlsx");
+                        string strUrl = "~/Assets/excel/" + fileName;
+                        var fileNameInProject = Server.MapPath(strUrl);
+                        using (var stream = System.IO.File.Open(fileNameInProject, FileMode.Open, FileAccess.Read))
+                        {
+                            using (var reader = ExcelReaderFactory.CreateReader(stream))
+                            {
+
+                                dataSet = reader.AsDataSet(new ExcelDataSetConfiguration
+                                {
+                                    ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration
+                                    {
+                                        UseHeaderRow = true,
+                                        ReadHeaderRow = rowReader =>
+                                        {
+                                            for (var i = 1; i < rowReader.RowCount; i++)
+                                            {
+                                                if (!rowReader.IsDBNull(0))
+                                                {
+                                                    string str = rowReader.GetValue(0).ToString();
+                                                    if (str.Equals("STT"))
+                                                        break;
+                                                }
+                                                rowReader.Read();
+                                            }
+                                        },
+                                    }
+                                });
+                                var dataTable = dataSet.Tables[0];
+                                for (var i = 0; i < dataTable.Rows.Count; i++)
+                                {
+                                    if (dataTable.Rows[i][0].ToString().Length == 0)
+                                        dataTable.Rows[i].Delete();
+                                }
+                                dataTable.AcceptChanges();
+                                for (var i = 0; i < dataTable.Rows.Count; i++)
+                                {
+                                    if (KiemtraColumEmpty_TKB(i))
+                                    {
+                                        if (ThemDuLieuVaoSQL_TKB(i))
+                                        {
+                                            importSuccess++;
+                                        }
+                                        else
+                                        {
+                                            importFail++;
+                                            importFailIndex = importFailIndex + (i + 1).ToString() + " ";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        importFail++;
+                                        importFailIndex = importFailIndex + (i + 1).ToString() + " ";
+                                    }
+                                }
+                                ktr = 1;
+                                reader.Close();
+                            }
+                        }
+                        System.IO.File.Delete(fileNameInProject);
+                    }
+                }
+                else {
+                ViewBag.Thongbao = "Chưa chọn và đọc file excel";
+                return View("Index");
+                }
+                ViewBag.ImportSuccess = importSuccess;
+                ViewBag.ImportFail = importFail;
+                ViewBag.ImportFailIndex = importFailIndex;
+                if (ktr == 1)
+                    return View("Success");
+                else
+                    return View("Success");
+        }
+
+        public bool KiemTraCauTruc_TKB(string name)
         {
             bool a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15;
             a1 = a2 = a3 = a4 = a5 = a6 = a7 = a8 = a9 = a10 = a11 = a12 = a13 = a14 = a15 = false;
-            var fileName = Server.MapPath(@"~/Assets/excel/test.xlsx");
+            //var fileName = Server.MapPath(@"~/Assets/excel/test.xlsx");
+            fileName = name;
+            string strUrl = "~/Assets/excel/" + fileName;
+            var fileNameInProject = Server.MapPath(strUrl);
             var path = Path.Combine(Server.MapPath(@"~/Assets/excel"), fileName);
             if (System.IO.File.Exists(path))
-                using (var stream = System.IO.File.Open(fileName, FileMode.Open, FileAccess.Read))
+                using (var stream = System.IO.File.Open(fileNameInProject, FileMode.Open, FileAccess.Read))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
@@ -218,12 +256,13 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                     a12 = true;
                                 if (i == 12 && str.Equals("Phòng"))
                                     a13 = true;
-                                if (i == 13 && str.Equals("Tên Lớp"))
+                                if (i == 13 && str.Equals("Tên lớp"))
                                     a14 = true;
                                 if (i == 14 && str.Equals("Ngày học"))
                                     a15 = true;
                             }
                         }
+                        reader.Close();
                     }
                 }
             if (a1 == true && a2 == true && a3 == true && a4 == true && a5 == true && a6 == true && a7 == true && a8 == true && a9 == true && a10 == true && a11 == true && a12 == true && a13 == true && a14 == true && a15 == true)
@@ -502,5 +541,60 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
 
             return dataLopMon;
         }
+
+
+        public ActionResult XuatExcelMauThemTKB()
+        {
+            try
+            {
+
+                DataTable Dt = new DataTable();
+                Dt.Columns.Add("STT", typeof(string));
+                Dt.Columns.Add("Nhóm", typeof(string));
+                Dt.Columns.Add("Tổ TH", typeof(string));
+                Dt.Columns.Add("Mã MH", typeof(string));
+                Dt.Columns.Add("Tên môn học", typeof(string));
+                Dt.Columns.Add("TC", typeof(string));
+                Dt.Columns.Add("Sĩ số", typeof(string));
+                Dt.Columns.Add("Mã GV", typeof(string));
+                Dt.Columns.Add("GV giảng dạy", typeof(string));
+                Dt.Columns.Add("Thứ", typeof(string));
+                Dt.Columns.Add("Tiết bắt đầu", typeof(string));
+                Dt.Columns.Add("Số tiết", typeof(string));
+                Dt.Columns.Add("Phòng", typeof(string));
+                Dt.Columns.Add("Tên lớp", typeof(string));
+                Dt.Columns.Add("Ngày học", typeof(string));
+
+
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                var memoryStream = new MemoryStream();
+                using (var excelPackage = new ExcelPackage(new FileInfo("MyWorkbook.xlsx")))
+                {
+                    var worksheet = excelPackage.Workbook.Worksheets.Add("Sheet1");
+                    worksheet.Cells["A1"].LoadFromDataTable(Dt, true, TableStyles.None);
+                    worksheet.Cells["A1:O1"].Style.Font.Bold = true;
+                    worksheet.DefaultRowHeight = 18;
+
+
+                    //worksheet.Column(2).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                    //worksheet.Column(6).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    //worksheet.Column(7).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    worksheet.DefaultColWidth = 15;
+
+                    //worksheet.Column(1).AutoFit();
+                    //worksheet.Column(2).AutoFit();
+
+                    //Session["DownloadExcel_FileManager"] = excelPackage.GetAsByteArray();
+                    byte[] data = excelPackage.GetAsByteArray() as byte[];
+                    return File(data, "application/octet-stream", "Mau_ThemTKB.xlsx");
+                    //return Json("", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

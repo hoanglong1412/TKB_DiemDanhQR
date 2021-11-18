@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- font library -->
+    @*<link rel="stylesheet" href="~/Assets/font/fontawesome-free-5.15.1-web/css/all.min.css">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- css reset -->
+    <link href="~/Assets/css/grid.css" rel="stylesheet" />
+    <!-- grid library -->
+    <link href="~/Assets/css/base.css" rel="stylesheet" />
+    <!-- base css -->
+    <link href="~/Assets/css/animation.css" rel="stylesheet" />
+    <!-- animation library -->
+    <link href="~/Assets/css/login_main.css" rel="stylesheet" />
+    <!-- main css -->
+    <link href="~/Assets/css/login_reponsive.css" rel="stylesheet" />
+    <!-- reponsive for device -->
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <img src="~/Assets/img/logo1.png" alt="" class="logo">
+        </header>
+        <!-- end header -->
+        <div class="container">
+            <div class="grid wide">
+                <div class="row">
+                    <div class="col l-8 m-0 c-0">
+                        <div class="school__info">
+                            <div class="school__info-left">
+                                <h1 class="school__info-title">Cổng thông tin đoàn viên</h1>
+                                <p class="school__info-note">Kênh thông tin dành cho tất cả đoàn viên.</p>
+                                <div class="school__link-hold">
+                                    <a href="https://www.hutech.edu.vn/" class="school__link" target="blank">Trang chủ HUTECH</a>
+                                    <a href="http://qlcntt.hutech.edu.vn/" class="school__link" target="blank">TT. QLCNTT</a>
+                                </div>
+                            </div>
+                            <div class="school__info-right">
+                                <img src="~/Assets/img/iphoneview.png" alt="" class="phone">
+                            </div>
+                        </div>
+                        <div class="download">
+                            <a href="https://apps.apple.com/us/app/e-hutech/id1237567424?ls=1" class="download__link">
+                                <img src="~/Assets/img/ios.png" alt="" class="download__pic">
+                            </a>
+                            <a href="https://play.google.com/store/apps/details?id=hutech.edu.vn714799&hl=vi" class="download__link">
+                                <img src="~/Assets/img/android.png" alt="" class="download__pic">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col l-4 m-12 c-12 padding">
+                        <div class="login__form">
+                            <h3 class="login__tilte">Đăng nhập</h3>
+                            <form method="post" action="" class="login__form-hold">
+                                <p class="label__login">
+                                    Tài khoản
+                                    <i class="fas fa-user"></i>
+                                </p>
+                                <input type="text" class="login__input" name="txt__account">
+                                <p class="label__login">
+                                    Mật mã
+                                    <i class="fas fa-lock"></i>
+                                </p>
+                                <input type="password" class="login__input" name="txt__password">
+                                <p class="login__form-info">
+                                    Đăng nhập không được?
+                                    <a href="http://qlcntt.hutech.edu.vn/ho-tro?tieu_de=tai%20khoan">Xem hướng dẫn tại đây</a>
+                                </p>
+                                <div class="btn__hold">
+                                    <button class="btn__login">Đăng nhập</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="copyright">
+                            <h5 class="copyright__ver">Version 3.1.0</h5>
+                            <h5 class="copyright__info">Bản quyền của HUTECH – Phát triển bởi TTQLCNTT © 2012 - 2021</h5>
+                            <div class="social__link">
+                                <a href="https://www.facebook.com/hutech.itcenter/" target="blank" class="social__link-btn">
+                                    <i class="fab fa-facebook"></i>
+
+                                </a>
+                                <a href="https://www.youtube.com/channel/UCICDAfLAzWgTrMJrDLcMZWw" target="blank" class="social__link-btn">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end main -->
+        <footer class="footer">
+        </footer>
+        <!-- end footer -->
+    </div>
+    <!-- end all -->
+</body>
+</html>

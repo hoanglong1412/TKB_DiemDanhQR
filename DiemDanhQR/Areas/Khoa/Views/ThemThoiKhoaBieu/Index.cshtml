@@ -16,17 +16,17 @@
                 <div class="form-group">
                     <div class="col-md-10">
                         <input type="file" name="fileupload" />
-                        @ViewBag.Thongbao
-
                     </div>
                 </div>
                 <div class="col-md-offset-2 col-md-10 my-3">
                     <input type="submit" value="Đọc Excel" class="btn btn-primary" />
-                    <a href="@Url.Action("ThemTKB","ThemThoiKhoaBieu")" class="btn btn-success">Thêm dữ liệu vào SQL</a>
+                    <a href="@Url.Action("ThemTKB", "ThemThoiKhoaBieu", new { name = ViewBag.FileName})" class="btn btn-success">Thêm dữ liệu vào SQL</a>
+                    <a href="@Url.Action("XuatExcelMauThemTKB", "ThemThoiKhoaBieu")" class="btn btn-success">Tải file excel mẫu</a>
                 </div>
             </div>
         }
     </div>
+    <span class="thongbao" my-data="@ViewBag.Thongbao"></span>
     @if (ViewData.Model != null)
     {
         <body>
@@ -91,4 +91,10 @@
             jQuery('#myTable').DataTable();
         });</script>
 }
+<script>
+        var tb = document.querySelector('.thongbao').getAttribute('my-data');
+    if (tb != null)
+        confirm(tb)
+    </script>
+
 

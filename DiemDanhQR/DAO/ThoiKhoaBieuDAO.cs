@@ -51,10 +51,12 @@ namespace DiemDanhQR.DAO
             return TKB;
         }
 
-        public ThoiKhoaBieu_DiemDanh CapNhatXacNhanDiemDanh(int malopmon, string mssv, DateTime NgayCapNhat)
+        public ThoiKhoaBieu_DiemDanh CapNhatXacNhanDiemDanh(int malopmon, string mota, string mssv, DateTime? NgayCapNhat)
         {
-            ThoiKhoaBieu_DiemDanh row = LayThoiKhoaBieuTheoMonVaSinhVien(malopmon, mssv);
+            ThoiKhoaBieu_DiemDanh row = new ThoiKhoaBieu_DiemDanh();
+            row = LayThoiKhoaBieuTheoMonVaSinhVien(malopmon, mssv);
             row.NgayDuyet = NgayCapNhat;
+            row.MoTa = mota;
             db.SaveChanges();
             return row;
         }
