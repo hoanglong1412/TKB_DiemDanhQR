@@ -239,5 +239,21 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
         //        return new EmptyResult();
         //    }
         //}
+
+        [HttpGet]
+        public ActionResult ChinhSua(int matkb)
+        {
+            ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuMaTKB(matkb);
+            ViewBag.TKB = TKB;
+            ViewBag.maLopMon = TKB.MaLopMon;
+            return View(TKB);
+        }
+
+        [HttpPost]
+        public ActionResult ChinhSua(FormCollection form)
+        {
+
+            return View();
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 else
                 {
                     ktrFail = true;
-                    ViewBag.Thongbao = "Không phải file excel";
+                    return ViewBag.Thongbao = "Không phải file excel";
                 }
                 if (!ktrFail)
                 {

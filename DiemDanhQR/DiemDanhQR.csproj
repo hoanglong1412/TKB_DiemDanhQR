@@ -191,6 +191,7 @@
     <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\Index.cshtml" />
     <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\DanhSach.cshtml" />
     <Content Include="Areas\Khoa\Views\TrangChu\DangNhap.cshtml" />
+    <Content Include="Areas\Khoa\Views\DanhSachDiemDanh\ChinhSua.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LayoutSinhVien.cshtml" />
     <Content Include="Views\SinhVien\Index.cshtml" />

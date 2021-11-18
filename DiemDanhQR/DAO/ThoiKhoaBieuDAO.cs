@@ -58,5 +58,11 @@ namespace DiemDanhQR.DAO
             db.SaveChanges();
             return row;
         }
+
+        public ThoiKhoaBieu_DiemDanh LayThoiKhoaBieuMaTKB(int matkb)
+        {
+            ThoiKhoaBieu_DiemDanh TKB = db.ThoiKhoaBieu_DiemDanh.Where(m => m.MaThoiKhoaBieu == matkb).FirstOrDefault();
+            return TKB;
+        }
     }
 }
