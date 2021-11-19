@@ -241,3 +241,31 @@ D:\TKB_DiemDanhQR\DiemDanhQR\bin\zxing.dll
 D:\TKB_DiemDanhQR\DiemDanhQR\bin\zxing.presentation.dll
 D:\TKB_DiemDanhQR\DiemDanhQR\bin\zxing.xml
 D:\TKB_DiemDanhQR\DiemDanhQR\bin\zxing.presentation.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\EPPlus.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.DataSet.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Microsoft.IO.RecyclableMemoryStream.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.ComponentModel.Annotations.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\zxing.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\zxing.presentation.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\EPPlus.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.pdb
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.DataSet.pdb
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\ExcelDataReader.DataSet.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Microsoft.IO.RecyclableMemoryStream.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\zxing.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\zxing.presentation.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Microsoft.Owin.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Newtonsoft.Json.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Owin.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Net.Http.Formatting.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Web.Http.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Web.Http.Owin.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Web.Http.WebHost.dll
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Microsoft.Owin.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\Newtonsoft.Json.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Net.Http.Formatting.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Web.Http.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Web.Http.Owin.xml
+D:\visual code\DiemDanhQR\DiemDanhQR\bin\System.Web.Http.WebHost.xml

@@ -120,7 +120,7 @@
         <a href="@Url.Action("XuatExcelDanhSachDiemDanh","DanhSachDiemDanh",new{  maLopMon = ma })" class="btn btn-success" style="margin-top:20px;">Xuất excel</a>
     </div>
 </div>
-<table>
+<table style="margin-top:18px;">
     <tr>
 
         <th>MSSV</th>
@@ -131,7 +131,7 @@
             @*<th>@date1.AddDays(7 * i - 7).ToString("dd/MM")</th>*@
             <th>@NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM")</th>
         }
-        <th>Chức năng</th>
+        <th>Chỉnh sửa</th>
 
     </tr>
     @foreach (var item in Model)
@@ -148,7 +148,7 @@
                 </td>
             }
             <td>
-                <a href="@Url.Action("ChinhSua","DanhSachDiemDanh", new { matkb = item.MaThoiKhoaBieu})" class="btn btn-success" style="margin-top:20px;">Chỉnh sửa</a>
+                <a href="@Url.Action("ChinhSua","DanhSachDiemDanh", new { matkb = item.MaThoiKhoaBieu})" class="btn btn-success" style="margin:00px; text-align:center"><i class="fas fa-edit"></i></a>
             </td>
         </tr>
     }

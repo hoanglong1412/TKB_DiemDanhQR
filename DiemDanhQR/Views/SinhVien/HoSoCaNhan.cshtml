@@ -1,0 +1,176 @@
+﻿@using DiemDanhQR.Models;
+@{
+    ViewBag.Title = "HoSoCaNhan";
+    Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
+}
+
+<style>
+    .content_holder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user_border {
+        margin: 200px;
+        position: relative;
+        width: 250px;
+        height: 205px;
+        /* border: 1px solid red; */
+    }
+
+    .user_avatar {
+        position: relative;
+        width: 250px;
+        height: 205px;
+        background-size: cover;
+        background-position: top;
+        background-repeat: no-repeat;
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        background-color: #0B4254;
+    }
+
+    .user_id, .user_name, .user_dateofbirth, .user_class, .user_email, .user_phone {
+        position: absolute;
+    }
+
+    .user_id {
+        top: -101px;
+        left: calc(100% + 2px);
+        width: 250px;
+        border-bottom: 1px solid black;
+        padding-right: 20px;
+        text-align: right;
+    }
+
+    .top_right {
+        left: 75%;
+        top: -65px;
+        position: absolute;
+        width: 1px;
+        height: 65px;
+        background-color: #000;
+        transform: skew(-45deg);
+        transform-origin: bottom;
+    }
+
+    .user_name {
+        width: 400px;
+        top: 37%;
+        transform: translateY(-50%);
+        left: calc(100% + 0px);
+        border-bottom: 1px solid black;
+        padding-right: 20px;
+        text-align: right;
+    }
+
+    .user_dateofbirth {
+        bottom: -81px;
+        left: calc(100% + 3px);
+        width: 250px;
+        border-bottom: 1px solid black;
+        padding-right: 20px;
+        text-align: right;
+    }
+
+    .bottom_right {
+        left: 75%;
+        bottom: -65px;
+        position: absolute;
+        width: 1px;
+        height: 65px;
+        background-color: #000;
+        transform: skew(45deg);
+        transform-origin: top;
+    }
+
+    .user_class {
+        top: -101px;
+        right: calc(100% + 2px);
+        width: 250px;
+        border-bottom: 1px solid black;
+        padding-left: 20px;
+    }
+
+    .top_left {
+        right: 75%;
+        top: -65px;
+        position: absolute;
+        width: 1px;
+        height: 65px;
+        background-color: #000;
+        transform: skew(45deg);
+        transform-origin: bottom;
+    }
+
+    .user_email {
+        width: 400px;
+        top: 37%;
+        transform: translateY(-50%);
+        right: calc(100% + 0px);
+        border-bottom: 1px solid black;
+        padding-left: 20px;
+    }
+
+    .user_phone {
+        bottom: -81px;
+        right: calc(100% + 3px);
+        width: 250px;
+        border-bottom: 1px solid black;
+        padding-left: 20px;
+    }
+
+    .bottom_left {
+        right: 75%;
+        bottom: -65px;
+        position: absolute;
+        width: 1px;
+        height: 65px;
+        background-color: #000;
+        transform: skew(-45deg);
+        transform-origin: top;
+    }
+
+    .user_role {
+        display: none;
+        position: absolute;
+        top: calc(100% + 50px);
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #00C87D;
+        color: #fff;
+        padding: 16px 18px;
+        min-width: 150px;
+        text-align: center;
+        box-shadow: 0 0 6px rgba(0,0,0,.4);
+    }
+
+        .user_role:hover {
+            cursor: pointer;
+            filter: brightness(0.95);
+        }
+</style>
+@{
+    SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+    DateTime NgaySinh =  DateTime.Now;
+    NgaySinh = sv.NgaySinh??DateTime.Now;
+}
+<div class="user_border">
+    <div class="user_avatar" style="background-image: url(https://bdch.com/sites/bdch.com/assets/images/Staff/profileNone.jpg); ">
+    </div>
+    <div class="top_right"> </div>
+    <div class="bottom_right"> </div>
+    <div class="top_left"> </div>
+    <div class="bottom_left"> </div>
+    <p class="user_id"> MSSV: @sv.MSSV</p>
+    <p class="user_name"> Họ Tên: @sv.HoTen</p>
+    @if (sv.NgaySinh != null)
+    {
+        <p class="user_dateofbirth"> Ngày Sinh: @NgaySinh.ToString("dd/MM/yyyy")</p>
+
+    }
+    <p class="user_class"> Lớp: @sv.Lop.MaLop</p>
+    <p class="user_email"> Email: @sv.Email</p>
+    <p class="user_phone"> SDT: @sv.SDT</p>
+    <p class="user_role"> ĐỔi MẬT KHẨU</p>
+</div>

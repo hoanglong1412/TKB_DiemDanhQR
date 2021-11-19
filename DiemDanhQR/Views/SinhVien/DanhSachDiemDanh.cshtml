@@ -82,6 +82,9 @@
     {
         NgayDauHoc = date1.AddDays(1);
     }
+
+    SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+
 }
 
 <style>
@@ -109,8 +112,7 @@
 </style>
 
 <h2>Bảng điểm danh</h2>
-
-@*<a href="@Url.Action("XacNhanDanhSachDiemDanh","SinhVien" , new { MaLopMon = ViewBag.TKB.LopMon.MaLopMon})" class="">Xacs nhajn</a>*@
+<p style="color:red;font-style:italic;">* Đây là chức năng dành cho ban cán sự lớp môn</p>
 <table>
     <tr>
 
@@ -119,7 +121,6 @@
 
         @for (int i = 1; i <= SoBuoiHoc; i++)
         {
-            @*<th>@date1.AddDays(7 * i - 7).ToString("dd/MM")</th>*@
             <th>@NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM")</th>
         }
 

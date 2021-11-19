@@ -1,0 +1,61 @@
+﻿@using DiemDanhQR.Models;
+@using DiemDanhQR.DAO;
+@using System.Collections.Generic;
+@using System.Linq;
+@{
+    ViewBag.Title = "DanhSachSinhVien";
+    Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
+}
+
+<h2>Danh Sách Sinh Viên</h2>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #dddddd;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        /*background-color: #dddddd;*/
+    }
+</style>
+<script src="~/Assets/js/jquery-3.4.1.min.js"></script>
+<div style="display:flex;justify-content:space-between">
+    <h2>Bảng sinh viên: @ViewBag.TKB.LopMon.MonHoc.MaMon - @ViewBag.TKB.LopMon.BuoiHoc.Thu.TenThu - @ViewBag.TKB.LopMon.TenLopMon</h2>
+</div>
+
+    <table>
+        <div style="color:orangered;margin-bottom:6px">*Là ban cán sự lớp.</div>
+        <tr>
+            <th>MSSV</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>SDT</th>
+            <th>Ngày sinh</th>
+            <th>Lớp</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MSSV </td>
+                <td>@item.SinhVien.HoTen </td>
+                <td>@item.SinhVien.Email</td>
+                <td>@item.SinhVien.SDT</td>
+                <td>@item.SinhVien.NgaySinh.ToString("dd/MM/yyyy")</td>
+                <td>@item.SinhVien.MaLop</td>
+            </tr>
+        }
+        
+
+    </table>
+
+
+

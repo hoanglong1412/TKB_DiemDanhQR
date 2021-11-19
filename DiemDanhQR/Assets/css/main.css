@@ -204,7 +204,6 @@ body{
 
 .sidebar_list li:hover a{
     filter: brightness(1);
-    font-weight: 400;
 }
 
 .sidebar_list li a i{

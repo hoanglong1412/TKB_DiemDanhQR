@@ -76,7 +76,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             {
                 if(item.NgayDuyet!=null)
                 {
-                    str = str + item.MoTa;
+                    str = str +" "+ item.MoTa;
                 }    
             }
             ViewBag.TKB = TKB;
@@ -269,17 +269,27 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             TimeSpan d3 = date2 - date1;
             int KhoangThoiGian = d3.Days;
             int SoBuoiHoc = KhoangThoiGian / 7 + 1;
-            string[] array_nBuoi = TKB.BuoiHoc.Split(',');
-            List<int> buoi = new List<int>();
-            foreach(var item in array_nBuoi)
-            {
-                buoi.Add(int.Parse(item));
-            }
             int max = -1;
-            foreach(var item in buoi)
+            if (TKB.BuoiHoc != null)
             {
-                if (item >= max)
-                    max = item;
+                string[] array_nBuoi = TKB.BuoiHoc.Split(',');
+                List<int> buoi = new List<int>();
+                foreach (var item in array_nBuoi)
+                {
+                    if(item.Length != 0)
+                    {
+                    buoi.Add(int.Parse(item));
+                    }
+                }
+                foreach (var item in buoi)
+                {
+                    if (item >= max)
+                        max = item;
+                }
+            }
+            else
+            {
+                max = 0;
             }
             ViewBag.BuoiDiemDanhCuoi = max;
             ViewBag.TKB = TKB;
@@ -295,11 +305,39 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             string chuoi = form["buoichon"];
             string[] array_chuoi = chuoi.Split('&');
             List<string> chuoithaydoi = new List<string>();
-            foreach(var item in array_chuoi)
+            foreach (var item in array_chuoi)
             {
-                if (TKB_sv.BuoiHoc.IndexOf(item) == -1)
+                if (TKB_sv.BuoiHoc != null)
                 {
-                    if(chuoithaydoi.Count() != 0)
+                    if (TKB_sv.BuoiHoc.IndexOf(item) == -1)
+                    {
+                        if (chuoithaydoi.Count() != 0)
+                        {
+                            bool ktr = false;
+                            foreach (var i in chuoithaydoi)
+                            {
+                                if (i.Equals(item))
+                                {
+                                    ktr = true;
+                                    chuoithaydoi.Remove(i);
+                                    break;
+                                }
+                            }
+                            if (!ktr)
+                            {
+                                chuoithaydoi.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            if (item.Length != 0)
+                                chuoithaydoi.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    if (chuoithaydoi.Count() != 0)
                     {
                         bool ktr = false;
                         foreach (var i in chuoithaydoi)
@@ -311,20 +349,35 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                                 break;
                             }
                         }
-                        if(!ktr){ 
-                            chuoithaydoi.Add(item);
+                        if (!ktr)
+                        {
+                            if (item.Length != 0)
+                                chuoithaydoi.Add(item);
                         }
                     }
-                    else { chuoithaydoi.Add(item); }  
-                    
+                    else
+                    {
+                        if (item.Length != 0)
+                            chuoithaydoi.Add(item);
+                    }
                 }
             }
             if (chuoithaydoi.Count() != 0)
             {
                 var data_tkbsv = data.ThoiKhoaBieu_DiemDanh.Find(matkb);
-                foreach(var item in chuoithaydoi)
+                bool landau = true;
+                foreach (var item in chuoithaydoi)
                 {
-                    data_tkbsv.BuoiHoc += "," + item;
+                    if (data_tkbsv.BuoiHoc == null)
+                    {
+                        if (landau)
+                        {
+                            data_tkbsv.BuoiHoc = item;
+                            landau = false;
+                        }
+                        else { data_tkbsv.BuoiHoc = data_tkbsv.BuoiHoc + "," + item; }
+                    }
+                    else { data_tkbsv.BuoiHoc = data_tkbsv.BuoiHoc + "," + item; }
                 }
                 data.SaveChanges();
             }

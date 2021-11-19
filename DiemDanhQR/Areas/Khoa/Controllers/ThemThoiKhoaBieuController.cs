@@ -307,7 +307,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 bool ktr1 = false;
                 foreach (var item in nhom_ToThucHanhs)
                 {
-                    if (item.Nhom == nhom_ToTH.Nhom)
+                    if (item.Nhom.Equals(nhom_ToTH.Nhom))
                         if (item.ToThucHanh == nhom_ToTH.ToThucHanh)
                         {
                             ktr1 = true;
@@ -326,7 +326,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 foreach (var item in monHocs)
                 {
                     if (item.MaMon.Equals(monHoc.MaMon))
-                        if (item.TenMon.Equals(monHoc.TenMon))
+                        //if (item.TenMon.Equals(monHoc.TenMon))
                         {
                             ktr2 = true;
                             break;

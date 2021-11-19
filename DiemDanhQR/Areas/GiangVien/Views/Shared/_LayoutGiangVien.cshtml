@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using DiemDanhQR.Models;
+<!DOCTYPE html>
 <html>
 <head>
     <title>@Page.Title</title>
@@ -10,12 +11,15 @@
     <link href="~/Assets/css/main.css" rel="stylesheet" />
     <link href="~/Assets/css/reponsive.css" rel="stylesheet" />
 </head>
+@{
+    GiaoVien giangVien = (GiaoVien)Session["taiKhoanGiangVien"];
+}
 <body>
     <div class="app">
         <div class="header">
             <div class="header_left">
                 <div class="logo">
-                    <img src="~/Assets/img/logo.png" alt="">
+                    <img src="~/Assets/img/GV_logo.png" alt="">
                 </div>
                 <button class="noti">
                     <i class="fas fa-bell"></i>
@@ -62,9 +66,9 @@
                     <i class="fas fa-expand-arrows-alt"></i>
                 </button>
                 <input type="text" class="hide-on-mobile-tablet">
-                <button class="logout-btn header_btn">
+                <a href="@Url.Action("DangXuat_gv","GiangVien")" class="logout-btn header_btn">
                     <i class="fas fa-sign-out-alt"></i>
-                </button>
+                </a>
                 <button class="menu-btn header_btn toggle-bar">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -74,11 +78,11 @@
             <div class="sidebar">
                 <div class="sidebar_user">
                     <img src="~/Assets/img/sunny.png" alt="">
-                    <p>Nguyễn Hoàng Long</p>
+                    <p>@giangVien.HoTen</p>
                 </div>
                 <ul class="sidebar_list">
                     <li>
-                        <a href="">
+                        <a href="@Url.Action("Index_gv","GiangVien")">
                             <i class="fas fa-home"></i>
                             <span>Trang chủ</span>
                         </a>
@@ -90,21 +94,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Điểm danh</span>
+                        <a href="@Url.Action("LichGiangDayTheoTuan","GiangVien")">
+                            <i class="fas fa-calendar-week"></i>
+                            <span>Lịch giảng dạy theo tuần</span>
                         </a>
                     </li>
                     <li>
                         <a href="@Url.Action("LichGiangDay","GiangVien")">
                             <i class="fas fa-calendar-alt"></i>
-                            <span>Lịch Giảng Dạy</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class="fas fa-phone-alt"></i>
-                            <span>Hỗ trợ</span>
+                            <span>Lịch giảng dạy</span>
                         </a>
                     </li>
                     <li>

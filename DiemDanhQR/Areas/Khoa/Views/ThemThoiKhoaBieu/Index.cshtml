@@ -15,7 +15,7 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input type="file" name="fileupload" />
+                        <input type="file" name="fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
                     </div>
                 </div>
                 <div class="col-md-offset-2 col-md-10 my-3">
@@ -29,7 +29,6 @@
     <span class="thongbao" my-data="@ViewBag.Thongbao"></span>
     @if (ViewData.Model != null)
     {
-        <body>
 
             <div class="card-body">
                 <table id="myTable" class="table table-bordered table-hover table-striped">
@@ -76,7 +75,6 @@
                     </tbody>
                 </table>
             </div>
-        </body>
     }
 </div>
 

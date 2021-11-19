@@ -17,6 +17,12 @@ namespace DiemDanhQR.Controllers
         // GET: SinhVien
         public ActionResult Index()
         {
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
             return View();
         }
 
@@ -94,7 +100,15 @@ namespace DiemDanhQR.Controllers
                 int buoi = Int32.Parse(thongTinMaQR[3]);
                 if (DateTime.Compare(DateTime.Now, thoiGianXuLy.AddMinutes(5)) <= 0)
                 {
-                    diemdanh.BuoiHoc = diemdanh.BuoiHoc.ToString() + "," + buoi;
+                    if (diemdanh.BuoiHoc != null)
+                    {
+                        diemdanh.BuoiHoc = diemdanh.BuoiHoc.ToString() + "," + buoi;
+                    }
+                    else
+                    {
+                        diemdanh.BuoiHoc =  buoi.ToString();
+
+                    }
                     db.Entry(diemdanh).State = EntityState.Modified;
                     db.SaveChanges();
                     ViewBag.thongtin = "Sinh vien: " + sv.MSSV + " da diem danh thanh cong!";
@@ -111,26 +125,50 @@ namespace DiemDanhQR.Controllers
 
         public ActionResult ThoiKhoaBieu()
         {
-            SinhVien TaiKhoan = db.SinhViens.Where(m => m.MSSV == "1811063022").FirstOrDefault();
-            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieu("1811063022");
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
+            SinhVien TaiKhoan = db.SinhViens.Where(m => m.MSSV == sv.MSSV).FirstOrDefault();
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieu(sv.MSSV);
             return View(ds_TKB);
         }
 
         public ActionResult ThoiKhoaBieuTheoTuan(DateTime ?date)
         {
-            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoThuTrongTuan("1811063022");
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoThuTrongTuan(sv.MSSV);
             ViewBag.date = date;
             return View(ds_TKB);
         }
 
         public ActionResult DanhSachLop()
         {
-            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuBanCanSu("1811063022");
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuBanCanSu(sv.MSSV);
             return View(ds_TKB);
         }
 
         public ActionResult DanhSachDiemDanh(int malopmon)
         {
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
             IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayDsThoiKhoaBieuTheoMon(malopmon);
             ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoMon(malopmon);
             ViewBag.TKB = TKB;
@@ -141,17 +179,57 @@ namespace DiemDanhQR.Controllers
         [HttpPost]
         public ActionResult XacNhanDanhSachDiemDanh(FormCollection form)
         {
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
             string txtMaLopMon = form.Get("MaLopMon");
             string MoTa = form.Get("MoTa");
             int MaLopMon = int.Parse(txtMaLopMon) > 0 ? int.Parse(txtMaLopMon) : 0;
-            thoikhoabieuDAO.CapNhatXacNhanDiemDanh(MaLopMon, MoTa, "1811063022", DateTime.Now);
+            thoikhoabieuDAO.CapNhatXacNhanDiemDanh(MaLopMon, MoTa, sv.MSSV, DateTime.Now);
 
             return RedirectToAction("XacNhanDiemDanhThanhCong");
         }
 
         public ActionResult XacNhanDiemDanhThanhCong()
         {
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
             return View();
+        }
+
+        public ActionResult HoSoCaNhan()
+        {
+            SinhVien sv = (SinhVien)Session["taiKhoanSinhVien"];
+            if (sv == null)
+            {
+                return RedirectToAction("DangNhap", "SinhVien");
+            }
+
+            return View();
+        }
+
+        public ActionResult DangXuat()
+        {
+            Session["taiKhoanSinhVien"] = null;
+            return RedirectToAction("DangNhap", "SinhVien");
+
+        }
+
+        public ActionResult DanhSachSinhVien(int malopmon)
+        {
+            IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayDsThoiKhoaBieuTheoMon(malopmon);
+            ThoiKhoaBieu_DiemDanh TKB = thoikhoabieuDAO.LayThoiKhoaBieuTheoMon(malopmon);
+            ViewBag.TKB = TKB;
+
+
+            return View(ds_TKB);
         }
     }
 }

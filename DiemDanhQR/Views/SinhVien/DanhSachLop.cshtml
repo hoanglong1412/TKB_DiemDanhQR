@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
 }
 
-<h2>DanhSachLop</h2>
 <style>
     table {
         font-family: arial, sans-serif;
@@ -23,8 +22,8 @@
         /*background-color: #dddddd;*/
     }
 </style>
-<h2>Thời Khóa Biểu</h2>
-
+<h2>Danh Sách Lớp</h2>
+<p style="color:red;font-style:italic;">* Đây là chức năng dành cho ban cán sự lớp môn</p>
 
 <table>
     <tr>
@@ -67,7 +66,8 @@
                 @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
                 @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
             </td>
-            <td><a class="btn-changeweek" href="@Url.Action("DanhSachDiemDanh","SinhVien",new{  malopmon = item.MaLopMon })">zo ne</a></td>
+             <td><a class="btn-changeweek" href="@Url.Action("DanhSachSinhVien","SinhVien",new{  malopmon = item.MaLopMon })">Sinh viên</a></td>
+            <td><a class="btn-changeweek" href="@Url.Action("DanhSachDiemDanh","SinhVien",new{  malopmon = item.MaLopMon })">Điểm danh</a></td>
         </tr>
     }
 

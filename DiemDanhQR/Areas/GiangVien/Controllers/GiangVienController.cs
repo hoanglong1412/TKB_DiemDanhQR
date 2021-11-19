@@ -153,7 +153,7 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             int buoi = -1;
 
             //Neu thoi gian hien tai con trong thoi gian hoc
-            if (DateTime.Now.Date <= ngayKT && DateTime.Now.Date > ngayBD)
+            if (DateTime.Now.Date <= ngayKT && DateTime.Now.Date >= ngayBD)
             {
                 buoi = -2;
                 //tinh theo tuan
@@ -179,7 +179,7 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             try
             {
                 qrcode.DuongDanQR = GenerateQRCode(qrcode.MaQR);
-                ViewBag.Message = "QR Code Created successfully";
+                ViewBag.Message = "Tạo mã thành công";
             }
             catch (Exception ex)
             {
@@ -261,5 +261,11 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             return RedirectToAction("DanhSachSinhVien_gv", "GiangVien",new { malopmon=malopmon});
         }
         //---------- Danh Sách Sinh Viên ----- End
+
+        public ActionResult DangXuat_gv()
+        {
+            Session["taiKhoanGiangVien"] = null;
+            return RedirectToAction("DangNhap_gv", "GiangVien");
+        }
     }
 }
