@@ -348,7 +348,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                         dataSV.SDT = sinhVien.SDT;
                         dataSV.MaLop = sinhVien.MaLop;
                         //dataSV.MatKhau = sinhVien.MatKhau;
-                        dataSV.LaBanCanSu = sinhVien.LaBanCanSu;
+                        //dataSV.LaBanCanSu = sinhVien.LaBanCanSu;
                         data.SaveChanges();
                     }
 
