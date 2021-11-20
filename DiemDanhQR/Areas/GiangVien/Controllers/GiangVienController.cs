@@ -48,13 +48,13 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
                     ViewBag.ThongBao = "Thông tin đăng nhập đang trống";
                 }
                 else
-                    ViewBag.ThongBao = "Vui lòng điền Account";
+                    ViewBag.ThongBao = "Vui lòng điền tài khoản";
             }
             else
             {
                 if (String.IsNullOrEmpty(matkhau))
                 {
-                    ViewBag.ThongBao = "Vui lòng điền Password";
+                    ViewBag.ThongBao = "Vui lòng điền mật khẩu";
                 }
                 else
                 {
@@ -93,13 +93,16 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             {
                 return RedirectToAction("DangNhap_gv", "GiangVien");
             }
-            dsLopMonGiangDay =layDanhSachLopMon(giangVien.MaGiaoVien);
+            dsLopMonGiangDay = layDanhSachLopMon(giangVien.MaGiaoVien);
             ThoiKhoaBieu_DiemDanh dsTKB=new ThoiKhoaBieu_DiemDanh();
             List<ThoiKhoaBieu_DiemDanh> dsLGD=new List<ThoiKhoaBieu_DiemDanh>();
             foreach (LopMon lop in dsLopMonGiangDay)
             {
                 dsTKB = lichgiangdayDAO.LayLichGiangDay(lop.MaLopMon);
-                dsLGD.Add(dsTKB);
+                if (dsTKB != null)
+                {
+                    dsLGD.Add(dsTKB);
+                }
             }
             return View(dsLGD);
         }
@@ -108,7 +111,6 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
 
         public ActionResult LichGiangDayTheoTuan(DateTime? date)
         {
-
             List<LopMon> dsLopMonGiangDay = new List<LopMon>();
             GiaoVien giangVien = (GiaoVien)Session["taiKhoanGiangVien"];
             if (giangVien == null)
@@ -121,9 +123,13 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             foreach (LopMon lop in dsLopMonGiangDay)
             {
                 dsTKB = lichgiangdayDAO.LayLichGiangDay(lop.MaLopMon);
-                dsLGD.Add(dsTKB);
+                if (dsTKB != null)
+                {
+                    dsLGD.Add(dsTKB);
+                }
             }
             ViewBag.date = date;
+
             return View(dsLGD.OrderBy(m => m.LopMon.BuoiHoc.MaThu).ThenBy(m => m.LopMon.BuoiHoc.TietBatDau));
 
         }

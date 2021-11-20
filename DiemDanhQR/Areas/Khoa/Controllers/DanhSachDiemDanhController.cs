@@ -29,6 +29,7 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
             var tkb = data.ThoiKhoaBieu_DiemDanh.ToList();
             List<int> listMaLopMon = new List<int>();
             List<LopMon> listLopMon = new List<LopMon>();
+            List<LopMon> listLopMonChuaDS = new List<LopMon>();
             foreach (var item in tkb)
             {
                 bool ktr = false;
@@ -60,7 +61,12 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 {
                     listLopMon.Add(lopMon);
                 }
+                else
+                {
+                    listLopMonChuaDS.Add(lopMon);
+                }
             }
+            ViewBag.ChuaCoDS = listLopMonChuaDS;
             return View(listLopMon);
             //IEnumerable<ThoiKhoaBieu_DiemDanh> ds_TKB = thoikhoabieuDAO.LayThoiKhoaBieuBanCanSu("1811063022");
             //return View(ds_TKB);

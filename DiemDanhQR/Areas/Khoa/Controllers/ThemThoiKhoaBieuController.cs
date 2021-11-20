@@ -393,16 +393,18 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 }
 
                 //Kiem tra trung va them du lieu bang LopMon
+                var nhom_t = data.Nhom_ToThucHanh.Where(m => m.Nhom.Equals(nhom_ToTH.Nhom) && m.ToThucHanh == nhom_ToTH.ToThucHanh).FirstOrDefault();
+                var buoi_t = data.BuoiHocs.Where(m => m.MaThu == buoiHoc.MaThu && m.TietBatDau == buoiHoc.TietBatDau && m.SoTiet == buoiHoc.SoTiet).FirstOrDefault();
                 var lopMonHocs = data.LopMons.ToList();
                 bool ktr6 = false;
                 foreach (var item in lopMonHocs)
                 {
                     if (item.TenLopMon.Equals(lopMon.TenLopMon))
                         if (String.Compare(item.MaPhong, lopMon.MaPhong, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace) == 0)
-                            if (item.MaBuoi == lopMon.MaBuoi)
+                            if (item.MaBuoi == buoi_t.MaBuoi)
                                 if (item.MaMon.Equals(lopMon.MaMon))
                                     if (String.Compare(item.MaGiaoVien, lopMon.MaGiaoVien, CultureInfo.CurrentCulture, CompareOptions.IgnoreNonSpace) == 0)
-                                        if (item.MaNhomToThucHanh == lopMon.MaNhomToThucHanh)
+                                        if (item.MaNhomToThucHanh == nhom_t.MaNhomToThucHanh)
                                         {
                                             ktr6 = true;
                                             break;
@@ -410,6 +412,8 @@ namespace DiemDanhQR.Areas.Khoa.Controllers
                 }
                 if (!ktr6)
                 {
+                    lopMon.MaNhomToThucHanh = nhom_t.MaNhomToThucHanh;
+                    lopMon.MaBuoi = buoi_t.MaBuoi;
                     data.LopMons.Add(lopMon);
                     data.SaveChanges();
                 }

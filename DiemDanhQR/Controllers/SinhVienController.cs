@@ -44,13 +44,13 @@ namespace DiemDanhQR.Controllers
                     ViewBag.ThongBao = "Thông tin đăng nhập đang trống";
                 }
                 else
-                    ViewBag.ThongBao = "Vui lòng điền Account";
+                    ViewBag.ThongBao = "Vui lòng điền tài khoản";
             }
             else
             {
                 if (String.IsNullOrEmpty(matkhau))
                 {
-                    ViewBag.ThongBao = "Vui lòng điền Password";
+                    ViewBag.ThongBao = "Vui lòng điền mật khẩu";
                 }
                 else
                 {
@@ -95,11 +95,11 @@ namespace DiemDanhQR.Controllers
                 int maLopMon = Int32.Parse(thongTinMaQR[2]);
                 string maGiangVien = thongTinMaQR[0];
                 ThoiKhoaBieu_DiemDanh diemdanh = new ThoiKhoaBieu_DiemDanh();
-                diemdanh = db.ThoiKhoaBieu_DiemDanh.First(a => a.MSSV == sv.MSSV && a.MaLopMon == maLopMon);
                 DateTime thoiGianXuLy = DateTime.Parse(thongTinMaQR[1]);
                 int buoi = Int32.Parse(thongTinMaQR[3]);
                 if (DateTime.Compare(DateTime.Now, thoiGianXuLy.AddMinutes(5)) <= 0)
                 {
+                    diemdanh = db.ThoiKhoaBieu_DiemDanh.First(a => a.MSSV == sv.MSSV && a.MaLopMon == maLopMon);
                     if (diemdanh.BuoiHoc != null)
                     {
                         diemdanh.BuoiHoc = diemdanh.BuoiHoc.ToString() + "," + buoi;

@@ -96,84 +96,93 @@
         <b>Thông tin tiết học</b>
     </div>
 </div>
+
 @foreach (var item in Model)
 {
-    if (item.LopMon.NgayBatDau.AddDays(-6) < Monday && item.LopMon.NgayKetThuc.AddDays(7) > Sunday)
+    if (item.LopMon != null)
     {
-        switch (item.LopMon.BuoiHoc.Thu.MaThu)
+        if (item.LopMon.NgayBatDau.AddDays(-6) < Monday && item.LopMon.NgayKetThuc.AddDays(7) > Sunday)
         {
-            case 2:
-                StudyDay = Monday;
-                break;
+            switch (item.LopMon.BuoiHoc.Thu.MaThu)
+            {
+                case 2:
+                    StudyDay = Monday;
+                    break;
 
-            case 3:
-                StudyDay = Monday.AddDays(1);
-                break;
+                case 3:
+                    StudyDay = Monday.AddDays(1);
+                    break;
 
-            case 4:
-                StudyDay = Monday.AddDays(2);
-                break;
+                case 4:
+                    StudyDay = Monday.AddDays(2);
+                    break;
 
-            case 5:
-                StudyDay = Monday.AddDays(3);
-                break;
+                case 5:
+                    StudyDay = Monday.AddDays(3);
+                    break;
 
-            case 6:
-                StudyDay = Monday.AddDays(4);
-                break;
+                case 6:
+                    StudyDay = Monday.AddDays(4);
+                    break;
 
-            case 7:
-                StudyDay = Sunday.AddDays(5);
-                break;
+                case 7:
+                    StudyDay = Monday.AddDays(5);
+                    break;
 
-            case 8:
-                StudyDay = Sunday;
-                break;
-        }
-        <div class="content_main">
-            <p class="title">@item.LopMon.BuoiHoc.Thu.TenThu, ngày @StudyDay.ToString("dd/MM/yyyy")</p>
-            <div class="hold">
-                <div class="left">
-                    @*de show ben popup*@
-                    <div class="hiden_info" style="display:none;">
-                        <span class="MaMon">@item.LopMon.MonHoc.MaMon</span>
-                        <span class="TenMon">@item.LopMon.MonHoc.TenMon</span>
-                        <span class="Nhom">@item.LopMon.Nhom_ToThucHanh.Nhom</span>
-                        <span class="SoTinChi">@item.LopMon.MonHoc.SoTinhChi</span>
-                        <span class="Thu">@item.LopMon.BuoiHoc.Thu.MaThu</span>
-                        <span class="TietBatDau">@item.LopMon.BuoiHoc.TietBatDau</span>
-                        <span class="MaPhong">@item.LopMon.MaPhong</span>
-                        <span class="TenGiaoVien">@item.LopMon.GiaoVien.HoTen</span>
-                        <span class="MaGiaoVien">@item.LopMon.GiaoVien.MaGiaoVien</span>
-                        <span class="LopMon">@item.LopMon.TenLopMon</span>
-                        <span class="NgayHoc">@StudyDay.ToString("dd/MM/yyyy")</span>
-                        <span class="Tiet">@item.LopMon.BuoiHoc.TietBatDau - @(item.LopMon.BuoiHoc.TietBatDau + item.LopMon.BuoiHoc.SoTiet - 1)</span>
-                        @if (@item.LopMon.Nhom_ToThucHanh.ToThucHanh == 1)
-                        {
-                            <span class="TenPhong">Phòng thực hành</span>
-                        }
-                        else
-                        {
-                            <span class="TenPhong">Phòng lý thuyết</span>
+                case 8:
+                    StudyDay = Sunday;
+                    break;
+            }
+            <div class="content_main">
+                <p class="title">@item.LopMon.BuoiHoc.Thu.TenThu, ngày @StudyDay.ToString("dd/MM/yyyy")</p>
+                <div class="hold">
+                    <div class="left">
+                        @*de show ben popup*@
+                        <div class="hiden_info" style="display:none;">
+                            <span class="MaMon">@item.LopMon.MonHoc.MaMon</span>
+                            <span class="TenMon">@item.LopMon.MonHoc.TenMon</span>
+                            <span class="Nhom">@item.LopMon.Nhom_ToThucHanh.Nhom</span>
+                            <span class="SoTinChi">@item.LopMon.MonHoc.SoTinhChi</span>
+                            <span class="Thu">@item.LopMon.BuoiHoc.Thu.MaThu</span>
+                            <span class="TietBatDau">@item.LopMon.BuoiHoc.TietBatDau</span>
+                            <span class="MaPhong">@item.LopMon.MaPhong</span>
+                            <span class="TenGiaoVien">@item.LopMon.GiaoVien.HoTen</span>
+                            <span class="MaGiaoVien">@item.LopMon.GiaoVien.MaGiaoVien</span>
+                            <span class="LopMon">@item.LopMon.TenLopMon</span>
+                            <span class="NgayHoc">@StudyDay.ToString("dd/MM/yyyy")</span>
+                            <span class="Tiet">@item.LopMon.BuoiHoc.TietBatDau - @(item.LopMon.BuoiHoc.TietBatDau + item.LopMon.BuoiHoc.SoTiet - 1)</span>
+                            @if (@item.LopMon.Nhom_ToThucHanh.ToThucHanh == 1)
+                            {
+                                <span class="TenPhong">Phòng thực hành</span>
+                            }
+                            else
+                            {
+                                <span class="TenPhong">Phòng lý thuyết</span>
 
-                        }
-                        <span>
-                            @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
-                            @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
-                        </span>
+                            }
+                            <span>
+                                @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
+                                @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
+                            </span>
+                        </div>
+
+                        <b style="color: red;">@item.LopMon.BuoiHoc.TietBatDau-@(item.LopMon.BuoiHoc.TietBatDau + item.LopMon.BuoiHoc.SoTiet - 1)</b>
+                        <p class="TenMon">
+                            @item.LopMon.MonHoc.MaMon - @item.LopMon.MonHoc.TenMon
+                        </p>
+                        <br>
                     </div>
-
-                    <b style="color: red;">@item.LopMon.BuoiHoc.TietBatDau-@(item.LopMon.BuoiHoc.TietBatDau + item.LopMon.BuoiHoc.SoTiet - 1)</b>
-                    <p class="TenMon">
-                        @item.LopMon.MonHoc.MaMon - @item.LopMon.MonHoc.TenMon
-                    </p>
-                    <br>
-                </div>
-                <div class="right hide-on-mobile">
-                    <p>Phòng: <b>@item.LopMon.MaPhong</b> - Lớp: @item.LopMon.TenLopMon</p>
+                    <div class="right hide-on-mobile">
+                        <p>Phòng: <b>@item.LopMon.MaPhong</b> - Lớp: @item.LopMon.TenLopMon</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+
+
     }
+
+
+
 }
 
