@@ -22,7 +22,7 @@
         /*background-color: #dddddd;*/
     }
 </style>
-<h2>Danh Sách Lớp</h2>
+<h2>Danh sách lớp</h2>
 
 
 <table>
@@ -38,6 +38,7 @@
         <th>Phòng</th>
         <th>GVHD</th>
         <th>Thời gian</th>
+        <th>Tác vụ</th>
 
 
     </tr>
@@ -66,12 +67,12 @@
                 @item.NgayBatDau.ToString("dd/MM/yyyy")<br />
                 @item.NgayKetThuc.ToString("dd/MM/yyyy")
             </td>
-            <td><a class="btn-changeweek" href="@Url.Action("DanhSach","DanhSachDiemDanh",new{  malopmon = item.MaLopMon })">điểm danh</a></td>
+            <td><a class="btn-changeweek btn btn-warning" href="@Url.Action("DanhSach","DanhSachDiemDanh",new{  malopmon = item.MaLopMon })" style="margin-left:10px;"><i class="far fa-eye"></i></a></td>
         </tr>
     }
 
 </table>
-<h2 style="margin:50px 0 24px">Danh Sách Lớp Chưa Có Sinh Viên</h2>
+<h2 style="margin:50px 0 24px">Danh sách lớp chưa có sinh viên</h2>
 <table>
     <tr>
         <th>Mã MH</th>
@@ -85,6 +86,7 @@
         <th>Phòng</th>
         <th>GVHD</th>
         <th>Thời gian</th>
+        <th>Tác vụ</th>
 
 
     </tr>
@@ -113,6 +115,7 @@
                 @item.NgayBatDau.ToString("dd/MM/yyyy")<br />
                 @item.NgayKetThuc.ToString("dd/MM/yyyy")
             </td>
+            <td><a class="btn-changeweek btn btn-success" href="@Url.Action("Index","ThemDanhSachSinhVien")" style="margin-left:10px;"><i class="fas fa-user-plus"></i></a> </td>
         </tr>
     }
 

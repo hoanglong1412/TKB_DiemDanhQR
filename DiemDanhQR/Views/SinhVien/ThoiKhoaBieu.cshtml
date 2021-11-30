@@ -12,6 +12,11 @@
         border: 1px solid #dddddd;
     }
 
+    th {
+        background-color: #362F4B;
+        color: #fff;
+    }
+
     td, th {
         border: 1px solid #dddddd;
         text-align: left;
@@ -19,11 +24,16 @@
     }
 
     tr:nth-child(even) {
-        /*background-color: #dddddd;*/
+        background-color: #F6F6F6;
+    }
+
+    .TKB {
+        width: 100px;
+        margin-bottom: 16px;
     }
 </style>
-<h2>Thời Khóa Biểu</h2>
-
+@*<img class="TKB" src="https://nss.edu.vn/uploads/news/topics/thoi-khoa-bieu.jpeg" />*@
+<h2 style="display:inline-block;">Thời Khóa Biểu</h2>
 
 <table>
     <tr>
@@ -41,22 +51,22 @@
     </tr>
     @foreach (var item in Model)
     {
-            <tr>
-                <td>@item.LopMon.MonHoc.MaMon</td>
-                <td style="width:360px;">@item.LopMon.MonHoc.TenMon</td>
-                <td>@item.LopMon.Nhom_ToThucHanh.Nhom</td>
-                <td>@item.LopMon.MonHoc.SoTinhChi</td>
-                <td>@item.LopMon.Nhom_ToThucHanh.ToThucHanh</td>
-                <td>@item.LopMon.BuoiHoc.Thu.TenThu</td>
-                <td>@item.LopMon.BuoiHoc.TietBatDau</td>
-                <td>@item.LopMon.BuoiHoc.SoTiet</td>
-                <td>@item.LopMon.MaPhong</td>
-                <td>@item.LopMon.GiaoVien.HoTen</td>
-                <td>
-                    @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
-                    @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
-                </td>
-            </tr>
+        <tr>
+            <td>@item.LopMon.MonHoc.MaMon</td>
+            <td style="width:360px;">@item.LopMon.MonHoc.TenMon</td>
+            <td>@item.LopMon.Nhom_ToThucHanh.Nhom</td>
+            <td>@item.LopMon.MonHoc.SoTinhChi</td>
+            <td>@item.LopMon.Nhom_ToThucHanh.ToThucHanh</td>
+            <td>@item.LopMon.BuoiHoc.Thu.TenThu</td>
+            <td>@item.LopMon.BuoiHoc.TietBatDau</td>
+            <td>@item.LopMon.BuoiHoc.SoTiet</td>
+            <td>@item.LopMon.MaPhong</td>
+            <td>@item.LopMon.GiaoVien.HoTen</td>
+            <td>
+                @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
+                @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
+            </td>
+        </tr>
     }
 
 </table>

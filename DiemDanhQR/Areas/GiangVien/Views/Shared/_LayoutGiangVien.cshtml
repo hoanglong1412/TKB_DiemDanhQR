@@ -78,7 +78,16 @@
             <div class="sidebar">
                 <div class="sidebar_user">
                     <img src="~/Assets/img/sunny.png" alt="">
-                    <p>@giangVien.HoTen</p>
+                    @if (giangVien.HoTen != null)
+                    {
+                        <p>@giangVien.HoTen</p>
+
+                    }
+                    else
+                    {
+                        <p>Giảng viên</p>
+                    }
+                    
                 </div>
                 <ul class="sidebar_list">
                     <li>

@@ -37,6 +37,7 @@
         <th>Phòng</th>
         <th>GVHD</th>
         <th>Thời gian</th>
+        <th colspan="2" style="text-align:center;">Xem</th>
     </tr>
     @foreach (var item in Model)
     {
@@ -63,8 +64,8 @@
         @item.LopMon.NgayBatDau.ToString("dd/MM/yyyy")<br />
         @item.LopMon.NgayKetThuc.ToString("dd/MM/yyyy")
     </td>
-    <td><a class="btn-changeweek" href="@Url.Action("DanhSachSinhVien_gv","GiangVien",new{  malopmon = item.MaLopMon })">Sinh viên</a></td>
-    <td><a class="btn-changeweek" href="@Url.Action("DanhSachDiemDanh_gv","GiangVien",new{  malopmon = item.MaLopMon })">Điểm danh</a></td>
+    <td><a class="btn-changeweek" href="@Url.Action("DanhSachSinhVien_gv","GiangVien",new{  malopmon = item.MaLopMon })"><i class="fas fa-user-graduate" style="color: #5CB85C; font-size: 1.1em; "></i></a></td>
+    <td><a class="btn-changeweek" href="@Url.Action("DanhSachDiemDanh_gv","GiangVien",new{  malopmon = item.MaLopMon })"><i class="far fa-calendar-alt" style="color: #289AE7; font-size: 1.1em; "></i></a></td>
 </tr>
     }
 

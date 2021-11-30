@@ -59,6 +59,7 @@ function popupEvent() {
     popupContent.forEach(item => {
         item.onclick = (e) => {
             popupMain.innerHTML = `
+        <div class="banner">Chi Tiết Buổi Học</div>
         <div class="my_row">
                 <p>Tên môn</p>
                 <b>${item.querySelector('.hold .left .hiden_info .TenMon').innerText}</b>
@@ -77,7 +78,7 @@ function popupEvent() {
             </div>
             <div class="my_row">
                 <p>Thứ:</p>
-                <b>${item.querySelector('.hold .left .hiden_info .TietBatDau').innerText}</b>
+                <b>${item.querySelector('.hold .left .hiden_info .Thu').innerText == '8' ? "Chủ nhật" : item.querySelector('.hold .left .hiden_info .Thu').innerText}</b>
             </div>
             <div class="my_row">
                 <p>Mã phòng:</p>

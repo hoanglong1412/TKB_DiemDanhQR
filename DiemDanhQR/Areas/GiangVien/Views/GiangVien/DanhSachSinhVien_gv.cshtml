@@ -30,7 +30,7 @@
 </style>
 <script src="~/Assets/js/jquery-3.4.1.min.js"></script>
 <div style="display:flex;justify-content:space-between">
-    <h2>Bảng sinh viên: @ViewBag.TKB.LopMon.MonHoc.MaMon - @ViewBag.TKB.LopMon.BuoiHoc.Thu.TenThu - @ViewBag.TKB.LopMon.TenLopMon</h2>
+    <h2>Danh Sách Lớp: @ViewBag.TKB.LopMon.MonHoc.TenMon - @ViewBag.TKB.LopMon.BuoiHoc.Thu.TenThu</h2>
 </div>
 <form action="/GiangVien/GiangVien/ChonBanCanSu" method="post">
 
@@ -56,7 +56,7 @@
                 <td>@item.SinhVien.NgaySinh.ToString("dd/MM/yyyy")</td>
                 @if (item.SinhVien.LaBanCanSu)
                 {
-                    <td style="color:orangered">@item.SinhVien.MaLop</td>
+                    <td style="color:#fff; border-radius: 20px; background-color:orange; padding:  2px;margin: 8px 0px 8px 8px;display:inline-block;">@item.SinhVien.MaLop</td>
                 }
                 else
                 {

@@ -84,7 +84,15 @@
             <div class="sidebar">
                 <div class="sidebar_user">
                     <img src="~/Assets/img/sunny.png" alt="">
+                    @if(khoa.HoTen != null)
+            {
                     <p>@khoa.HoTen</p>
+
+            }
+            else
+            {
+                <p>Tài khoản</p>
+            }
                 </div>
                 <ul class="sidebar_list">
                     <li>

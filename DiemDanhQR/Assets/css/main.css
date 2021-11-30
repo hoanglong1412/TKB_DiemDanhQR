@@ -344,3 +344,43 @@ body{
 .array_number{
     display:none;
 }
+
+/*more*/
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #dddddd;
+}
+
+th {
+    background-color: #362F4B;
+    color: #fff;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #F6F6F6;
+}
+
+.TKB {
+    width: 100px;
+    margin-bottom: 16px;
+}
+
+.banner {
+    margin-bottom: 26px;
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-image: url("https://www.onlygfx.com/wp-content/uploads/2017/10/grunge-banner-3-10.png");
+    background-position:center;
+    padding: 16px 0;
+    text-align:center;
+    color:#fff;
+}
+

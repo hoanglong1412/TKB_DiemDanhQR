@@ -7,7 +7,6 @@
     Layout = "~/Views/Shared/_LayoutSinhVien.cshtml";
 }
 
-<h2>Danh Sách Sinh Viên</h2>
 <style>
     table {
         font-family: arial, sans-serif;
@@ -28,11 +27,10 @@
 </style>
 <script src="~/Assets/js/jquery-3.4.1.min.js"></script>
 <div style="display:flex;justify-content:space-between">
-    <h2>Bảng sinh viên: @ViewBag.TKB.LopMon.MonHoc.MaMon - @ViewBag.TKB.LopMon.BuoiHoc.Thu.TenThu - @ViewBag.TKB.LopMon.TenLopMon</h2>
+    <h2>Danh Sách Lớp: @ViewBag.TKB.LopMon.MonHoc.TenMon - @ViewBag.TKB.LopMon.BuoiHoc.Thu.TenThu </h2>
 </div>
 
     <table>
-        <div style="color:orangered;margin-bottom:6px">*Là ban cán sự lớp.</div>
         <tr>
             <th>MSSV</th>
             <th>Họ tên</th>
