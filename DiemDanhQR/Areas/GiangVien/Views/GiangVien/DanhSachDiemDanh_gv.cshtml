@@ -25,6 +25,7 @@
     string CYear = date2.ToString("yyyy");
 
     string ngayThang = DateTime.Now.Day.ToString() + "/" + DateTime.Now.Month.ToString();
+
     int dungNgay = 0;
 
     switch (TietBD)
@@ -158,9 +159,10 @@
         {
             @*<th>@date1.AddDays(7 * i - 7).ToString("dd/MM")</th>*@
             <th>@NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM")</th>
+            //                                                         "02/12" => ngayThang
             if (NgayDauHoc.AddDays(7 * i - 7).ToString("dd/MM").Equals(ngayThang))
             {
-                if (DateTime.Now.Hour <= GioKT && DateTime.Now.Hour >= GioBD)
+                if (DateTime.Now.Hour <= 20 && DateTime.Now.Hour >= GioBD)
                 {
                     dungNgay = 1;
                 }

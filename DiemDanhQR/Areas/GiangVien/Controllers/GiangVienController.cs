@@ -163,10 +163,10 @@ namespace DiemDanhQR.Areas.GiangVien.Controllers
             {
                 buoi = -2;
                 //tinh theo tuan
-                for(int i = 0; i <= (int)(ngayKT.Subtract(ngayBD).TotalDays / 7); i++)
+                for(int i = 0; i <= (int)(ngayKT.Subtract(ngayBD).TotalDays / 7)+1; i++)
                 {
                     if (DateTime.Compare(DateTime.Now.Date, ngayDauTuan.AddDays(7 * i)) >= 0 &&
-                        DateTime.Compare(DateTime.Now.Date, ngayDauTuan.AddDays(7 * i + 6)) < 0)
+                        DateTime.Compare(DateTime.Now.Date, ngayDauTuan.AddDays(7 * i + 6)) <= 0)
                     {
                         buoi = i+1;
                     }

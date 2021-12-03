@@ -87,7 +87,7 @@ namespace DiemDanhQR.Controllers
             List<QR> listQR = db.QRs.ToList();
             if (listQR.FirstOrDefault(m => m.MaQR == MaQR) == null)
             {
-                ViewBag.thongtin = "Ma QR khong ton tai. Diem danh that bai!";
+                ViewBag.thongtin = "Mã QR không tồn tại. Điểm danh thất bại!";
             }
             else
             {
@@ -111,11 +111,11 @@ namespace DiemDanhQR.Controllers
                     }
                     db.Entry(diemdanh).State = EntityState.Modified;
                     db.SaveChanges();
-                    ViewBag.thongtin = "Sinh vien: " + sv.MSSV + " da diem danh thanh cong!";
+                    ViewBag.thongtin = "Sinh viên: " + sv.MSSV + " đã điểm danh thành công!";
                 }
                 else
                 {
-                    ViewBag.thongtin = "Ma QR het han. Diem danh that bai!";
+                    ViewBag.thongtin = "Mã QR hết hạn. Điểm danh thất bại!";
                 }
             }
             return View();
